@@ -13,6 +13,6 @@ describe('Longest Common Substring', () => {
     assert.strictEqual(lcs(['ABCDEFGH', '1234']), '');
     assert.strictEqual(lcs(['ABCDEFGH']), 'ABCDEFGH');
     assert.strictEqual(lcs(['']), '');
-    assert.strictEqual(lcs([]), 'empty line');
+    assert.strictEqual(lcs([]), '');
   });
 });

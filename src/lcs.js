@@ -1,38 +1,26 @@
 'use strict';
 
 /**
- * @param {Array.<string>} strings
+ * @param {*} strings
  * @returns {string}
  */
 
-const lcs = (strings = process.argv.slice(2)) => {
-    const sortedStrings = strings.sort((a, b) => a.length - b.length);
-    const shortestString = sortedStrings[0];
-    let longestSubstring = '';
+function lcs(strings) {
+  if (!strings.length) return '';
 
-    if (strings.length === 0) {
-        console.log('empty line')
-        return 'empty line'
+  const shortestString = strings.reduce((a, b) => (a.length <= b.length ? a : b));
+  const maxLength = shortestString.length;
+
+  for (let len = maxLength; len > 0; len--) {
+    for (let start = 0; start <= maxLength - len; start++) {
+      const substr = shortestString.slice(start, start + len);
+      if (strings.every((str) => str.includes(substr))) return substr;
     }
+  }
 
-    for (let i = 0; i < shortestString.length; i++) {
-        for (let j = i + 1; j <= shortestString.length; j++) {
-            const subStr = shortestString.slice(i, j);
-
-            if (sortedStrings.every((str) => str.includes(subStr))) {
-                if (subStr.length > longestSubstring.length) {
-                    longestSubstring = subStr;
-                }
-            }
-        }
-    }
-
-    console.log(longestSubstring);
-
-    return longestSubstring;
-
-};
+  return '';
+}
 
 module.exports = {
-    lcs,
+  lcs,
 };
