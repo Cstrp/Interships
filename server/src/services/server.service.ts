@@ -1,9 +1,15 @@
 import express from 'express';
-import mysql from 'mysql';
+import mysql from 'mysql2';
 import cors from 'cors';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_USER } from '../config/db';
+import { checkRouter } from '../routes';
+import { authRouter } from '../routes/auth';
+import { ROUTES } from '../models';
+import bodyParser from 'body-parser';
+import { usersRouter } from '../routes/users';
 
 const app = express();
+
 const connection = mysql.createConnection({
   host: DB_HOST,
   user: DB_USER,
@@ -12,5 +18,9 @@ const connection = mysql.createConnection({
 });
 
 app.use(cors({ origin: '*' }));
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(ROUTES.DEFAULT, checkRouter);
+app.use(ROUTES.DEFAULT, authRouter);
+app.use(ROUTES.DEFAULT, usersRouter);
 export { app, connection };

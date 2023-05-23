@@ -4,10 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="545ceb34-85d6-468b-8a60-d5fc219e3aed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+    <list default="true" id="bb398a98-a6a9-4df3-9b40-d8e250fd7ec6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/controller/checkConnection.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/controller/users.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/middleWares/jwtMiddleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/models/decodedToken.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/models/requests.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/models/routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/models/status.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/models/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/routes/check.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/routes/users.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/services/authentication.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/config/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/config/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/config/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controller/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controller/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/controller/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controller/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/services/server.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/server.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/services/utility.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/utility.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,16 +55,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="develop" />
-                    <option name="lastUsedInstant" value="1684778352" />
+                    <option name="branchName" value="dev/Task-4" />
+                    <option name="lastUsedInstant" value="1684825078" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="dev/Task-3" />
-                    <option name="lastUsedInstant" value="1684749334" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="dev/Task-2" />
-                    <option name="lastUsedInstant" value="1684749333" />
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1684825077" />
                   </RecentBranch>
                 </list>
               </option>
@@ -52,10 +77,9 @@
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
-  <component name="ProjectId" id="2Q8xlLZQfiqW3enoY4sIcTIgHKY" />
+  <component name="ProjectId" id="2QBROix4vnLjkcT7MXwxAvH7Noq" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
-    <ConfirmationsSetting value="2" id="Remove" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -65,49 +89,31 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "dev/Task-4",
-    "javascript.nodejs.core.library.configured.version": "18.16.0",
-    "javascript.nodejs.core.library.typings.version": "18.16.0",
-    "last_opened_file_path": "/home/hie/Documents/ItransitionCourse/client",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "18.13.0",
+    "javascript.nodejs.core.library.typings.version": "18.13.0",
+    "last_opened_file_path": "D:/Projects/ItransitionCourse",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.standard": "",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "/home/hie/.local/share/nvm/v18.16.0/bin/node",
+    "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "pnpm",
-    "prettier.import.notification.dismissed": "true",
-    "prettierjs.PrettierConfiguration.Package": "/home/hie/Documents/ItransitionCourse/client/node_modules/prettier",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/home/hie/Documents/ItransitionCourse/client/node_modules/typescript/lib",
+    "prettierjs.PrettierConfiguration.Package": "D:\\Projects\\ItransitionCourse\\server\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "ts.external.directory.path": "D:\\Projects\\ItransitionCourse\\server\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/server/src/services" />
-      <recent name="$PROJECT_DIR$/server/src/routes" />
-      <recent name="$PROJECT_DIR$/server/src/models" />
-      <recent name="$PROJECT_DIR$/server/src/middleWares" />
-      <recent name="$PROJECT_DIR$/server/src/controller" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/client/src/data/utils" />
-      <recent name="$PROJECT_DIR$/client/src/view" />
-      <recent name="$PROJECT_DIR$/client/src/view/components/TextFormField" />
-      <recent name="$PROJECT_DIR$/client" />
-      <recent name="$PROJECT_DIR$/src/Data" />
-    </key>
-  </component>
-  <component name="RunManager" selected="npm.tt">
+  <component name="RunManager" selected="npm.dev">
     <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
+      <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
         <script value="build" />
@@ -117,7 +123,7 @@
       <method v="2" />
     </configuration>
     <configuration name="dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
+      <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
         <script value="dev" />
@@ -126,11 +132,21 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="tt" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/client/package.json" />
+    <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
       <command value="run" />
       <scripts>
-        <script value="tt" />
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -138,9 +154,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.tt" />
         <item itemvalue="npm.dev" />
+        <item itemvalue="npm.start (1)" />
         <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -150,25 +167,30 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="545ceb34-85d6-468b-8a60-d5fc219e3aed" name="Changes" comment="" />
-      <created>1684749160434</created>
+      <changelist id="bb398a98-a6a9-4df3-9b40-d8e250fd7ec6" name="Changes" comment="" />
+      <created>1684824958132</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1684749160434</updated>
-      <workItem from="1684749162395" duration="619000" />
-      <workItem from="1684755314342" duration="20000" />
-      <workItem from="1684768932797" duration="1136000" />
-      <workItem from="1684770076867" duration="7792000" />
-      <workItem from="1684778305083" duration="115000" />
-      <workItem from="1684778428516" duration="1198000" />
-      <workItem from="1684782125850" duration="6797000" />
+      <updated>1684824958132</updated>
+      <workItem from="1684824960735" duration="21000" />
+      <workItem from="1684824990649" duration="361000" />
+      <workItem from="1684825361437" duration="1177000" />
+      <workItem from="1684831845030" duration="9754000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
