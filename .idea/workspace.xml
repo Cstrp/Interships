@@ -5,38 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb398a98-a6a9-4df3-9b40-d8e250fd7ec6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/controller/checkConnection.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/controller/users.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/middleWares/jwtMiddleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/models/decodedToken.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/models/requests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/models/routes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/models/status.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/models/user.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/check.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/routes/users.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/services/authentication.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/config/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/config/db.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/config/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controller/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controller/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controller/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controller/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/auth.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/server.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/server.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/services/utility.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/utility.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +144,7 @@
       <workItem from="1684824960735" duration="21000" />
       <workItem from="1684824990649" duration="361000" />
       <workItem from="1684825361437" duration="1177000" />
-      <workItem from="1684831845030" duration="9754000" />
+      <workItem from="1684831845030" duration="10066000" />
     </task>
     <servers />
   </component>
