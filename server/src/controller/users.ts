@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 import { connection } from '../services';
+import { REQUESTS } from '../enums';
+import mysql from 'mysql2';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
 
-    connection.query('SELECT * FROM users WHERE id = ?', [userId], (err, result) => {
+    connection.query(REQUESTS.FIND_USER_BY_ID, [userId], (err, result) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to retrieve users' });
@@ -30,13 +32,67 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const updateUserStatus = (req: Request, res: Response) => {};
+const updateUserStatus = (req: Request, res: Response) => {
+  try {
+    const userId = req.params.id;
+    const { status } = req.body;
 
-const updateAllUsersStatus = (req: Request, res: Response) => {};
+    connection.query(REQUESTS.UPDATE_USER_STATUS, [status, userId], (err, result: mysql.ResultSetHeader) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Failed to update user status' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User status updated successfully' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update user status' });
+  }
+};
+
+const updateAllUsersStatus = (req: Request, res: Response) => {
+  try {
+    const { status } = req.body;
+
+    connection.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Failed to update users status' });
+      }
+
+      res.status(200).json({ message: 'Successfully updated all users status' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to update all users status' });
+  }
+};
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-  } catch (error) {}
+    const userId = req.params.id;
+
+    connection.query(REQUESTS.FIND_USER_BY_ID_AND_DELETE, [userId], (err, result: mysql.ResultSetHeader) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: 'Failed to delete user' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete user' });
+  }
 };
 
 export { getUsers, updateUserStatus, updateAllUsersStatus, deleteUser };

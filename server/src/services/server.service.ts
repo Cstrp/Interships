@@ -1,7 +1,7 @@
 import express from 'express';
 import mysql from 'mysql2';
 import cors from 'cors';
-import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_USER } from '../config/db';
+import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_USER } from '../config';
 import { checkRouter } from '../routes';
 import { authRouter } from '../routes/auth';
 import { ROUTES } from '../models';

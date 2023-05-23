@@ -1,4 +1,4 @@
-import { STATUS } from './status';
+import { STATUS } from '../enums';
 
 export interface User {
   id?: string;
