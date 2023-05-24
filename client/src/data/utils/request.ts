@@ -1,6 +1,6 @@
-import { api } from './api.ts';
+import { api } from '.';
 import { User } from '../types';
-import { setItem } from './localStorage.ts';
+import { setItem } from './localStorage';
 
 const getUsers = async () => {
   try {

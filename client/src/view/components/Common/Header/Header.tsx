@@ -1,15 +1,22 @@
-import { AppBar, Box, Toolbar, Typography } from '@mui/material';
-import { HeaderTabs } from '../HeaderTabs/HeaderTabs.tsx';
-import { tabs } from './tabs.ts';
+import { AppBar, Box, Toolbar } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { tabs } from './tabs';
+import React from 'react';
+import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
+import { ROUTER_PATHS } from '../../../../data';
 
-export const Header = (): JSX.Element => {
+export const Header = () => {
+  const location = useLocation();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar variant={'elevation'} color={'inherit'}>
         <Toolbar>
-          <Typography sx={{ flexGrow: 1 }}>TEST APP</Typography>
+          <Link style={{ flexGrow: 1 }} to={ROUTER_PATHS.DEFAULT}>
+            TEST APP
+          </Link>
 
-          <HeaderTabs tabs={tabs} />
+          {location.pathname !== ROUTER_PATHS.USERS ? <HeaderTabs tabs={tabs} /> : ''}
         </Toolbar>
       </AppBar>
     </Box>

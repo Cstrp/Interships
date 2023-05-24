@@ -1,3 +1,3 @@
-export * from './UsersTable/UsersTable.tsx';
-export * from './UsersTableRows/UsersTableRows.tsx';
-export * from './UsersTableCols/UsersTableCols.tsx';
+export * from './UsersTable/UsersTable';
+export * from './UsersTableRows/UsersTableRows';
+export * from './UsersTableCols/UsersTableCols';

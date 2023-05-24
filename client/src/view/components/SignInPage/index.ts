@@ -1,1 +1,1 @@
-export * from './SignInForm/SignInForm.tsx';
+export * from './SignInForm/SignInForm';

@@ -1,9 +1,9 @@
 import { Field, Form, Formik } from 'formik';
-import { signUp, signUpSchema } from '../../../../data';
-import { TextFormField } from '../../Common/TextFormField/TextFormField.tsx';
+import { TextFormField } from '../../Common';
 import { Box, Button } from '@mui/material';
+import { signUp, signUpSchema } from '../../../../data';
 
-export const SignUpForm = (): JSX.Element => {
+export const SignUpForm = () => {
   return (
     <Formik
       validationSchema={signUpSchema}

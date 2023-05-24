@@ -1,7 +1,7 @@
 import { Tab, Tabs } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { HeaderTabsProps } from './headerTabsProps.ts';
+import React, { useState } from 'react';
+import { HeaderTabsProps } from './headerTabsProps';
 
 export const HeaderTabs = ({ tabs }: HeaderTabsProps) => {
   const [value, setValue] = useState(0);
@@ -14,7 +14,7 @@ export const HeaderTabs = ({ tabs }: HeaderTabsProps) => {
   return (
     <Tabs value={value} onChange={handleChange} orientation={'horizontal'} selectionFollowsFocus>
       {tabs.map((tab, idx) => (
-        <Tab component={Link as any} to={tab.title} key={idx} label={tab.title} />
+        <Tab key={idx} component={Link} to={tab.link} label={tab.title} />
       ))}
     </Tabs>
   );

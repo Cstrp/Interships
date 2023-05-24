@@ -1,2 +1,3 @@
-export * from './TextFormField/TextFormField.tsx';
-export * from './Header/Header.tsx';
+export * from './TextFormField/TextFormField';
+export * from './Header/Header';
+export * from './Wrapper/Wrapper';
