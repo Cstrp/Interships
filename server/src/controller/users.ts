@@ -59,7 +59,7 @@ const updateAllUsersStatus = (req: Request, res: Response) => {
   try {
     const { status } = req.body;
 
-    connection.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err, result) => {
+    connection.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to update users status' });

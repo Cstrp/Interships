@@ -1,11 +1,14 @@
-import * as moment from 'moment';
-
 export interface User {
-  id?: number;
+  id?: string;
   username: string;
   email: string;
   password: string;
-  registrationDate: moment.Moment;
-  lastVisit: moment.Moment;
-  status?: string;
+  registration_date: string;
+  last_visit: string;
+  status?: STATUS;
+}
+
+export const enum STATUS {
+  ACTIVE = 'active',
+  DEACTIVATED = 'deactivated',
 }

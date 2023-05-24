@@ -3,6 +3,22 @@
 @tailwind utilities;
 
 
+html, body {
+  font: 16px/1.4 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  user-select: none;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #F7F6F3;
+}
+
+
+
+
+
+
 * {
   padding: 0;
   margin: 0;
