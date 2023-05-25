@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { DecodedToken } from '../models';
-import { JWT_SECRET } from '../config/db';
+import { JWT_SECRET } from '../config';
 import { NextFunction, Request, Response } from 'express';
 
 const jwtMiddleware = (req: Request, res: Response, next: NextFunction) => {

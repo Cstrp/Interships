@@ -1,14 +1,11 @@
+import { STATUS } from '../enums';
+
 export interface User {
-  id?: string;
+  id?: number;
   username: string;
   email: string;
   password: string;
-  registration_date: string;
-  last_visit: string;
+  registration_date?: number;
+  last_visit?: number | null;
   status?: STATUS;
-}
-
-export const enum STATUS {
-  ACTIVE = 'active',
-  DEACTIVATED = 'deactivated',
 }

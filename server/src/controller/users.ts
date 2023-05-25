@@ -17,7 +17,7 @@ const getUsers = async (req: Request, res: Response) => {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      connection.query('select * from users', (err, result) => {
+      connection.query(REQUESTS.SELECT_ALL_USERS, (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ message: 'Failed to get users' });
@@ -34,10 +34,9 @@ const getUsers = async (req: Request, res: Response) => {
 
 const updateUserStatus = (req: Request, res: Response) => {
   try {
-    const userId = req.params.id;
-    const { status } = req.body;
+    const { status, id } = req.body;
 
-    connection.query(REQUESTS.UPDATE_USER_STATUS, [status, userId], (err, result: mysql.ResultSetHeader) => {
+    connection.query(REQUESTS.UPDATE_USER_STATUS, [status, id], (err, result: mysql.ResultSetHeader) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to update user status' });

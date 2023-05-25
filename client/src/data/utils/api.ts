@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { getItem } from './localStorage.ts';
+import { getItem } from './localStorage';
 
 export const API_URL = 'http://localhost:3060/api';
 
@@ -16,7 +16,7 @@ api.interceptors.response.use(
 api.interceptors.request.use((config) => {
   const token = getItem('token');
 
-  if (token) config.headers['Authorization'] = 'Bearer ' + token;
+  if (token) config.headers['Authorization'] = `${token}`;
 
   return config;
 });

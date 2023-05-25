@@ -18,8 +18,8 @@ const connection = mysql.createConnection({
 });
 
 app.use(cors({ origin: '*' }));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(ROUTES.DEFAULT, checkRouter);
 app.use(ROUTES.DEFAULT, authRouter);
 app.use(ROUTES.DEFAULT, usersRouter);

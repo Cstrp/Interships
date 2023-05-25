@@ -5,7 +5,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  registration_date?: string;
-  last_visit?: string | null;
+  registration_date?: number;
+  last_visit?: number | null;
   status?: STATUS;
 }
