@@ -1,23 +1,23 @@
 import { Request, Response } from 'express';
-import { connection } from '../services';
+import { sql } from '../services';
 import { REQUESTS } from '../enums';
-import mysql from 'mysql2';
+import { ResultSetHeader, RowDataPacket } from 'mysql2';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
 
-    connection.query(REQUESTS.FIND_USER_BY_ID, [userId], (err, result) => {
+    sql.query(REQUESTS.FIND_USER_BY_ID, [userId], (err, result: RowDataPacket[]) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to retrieve users' });
       }
 
-      if (Array.isArray(result) && result.length > 0) {
+      if (result.length > 0) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      connection.query(REQUESTS.SELECT_ALL_USERS, (err, result) => {
+      sql.query(REQUESTS.SELECT_ALL_USERS, (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ message: 'Failed to get users' });
@@ -36,15 +36,13 @@ const updateUserStatus = (req: Request, res: Response) => {
   try {
     const { status, id } = req.body;
 
-    connection.query(REQUESTS.UPDATE_USER_STATUS, [status, id], (err, result: mysql.ResultSetHeader) => {
+    sql.query(REQUESTS.UPDATE_USER_STATUS, [status, id], (err, result: RowDataPacket[]) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to update user status' });
       }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+      if (result.length === 0) return res.status(404).json({ message: 'User not found' });
 
       res.status(200).json({ message: 'User status updated successfully' });
     });
@@ -54,37 +52,45 @@ const updateUserStatus = (req: Request, res: Response) => {
   }
 };
 
-const updateAllUsersStatus = (req: Request, res: Response) => {
+const updateMultipleUsersStatus = (req: Request, res: Response) => {
   try {
-    const { status } = req.body;
+    const { status, ids } = req.body;
 
-    connection.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Failed to update users status' });
-      }
+    sql.query(`update users set status = ? where id in (?)`, [status, ids], (err) => {
+      if (err) return res.status(500).json({ message: 'Failed to update selected users status' });
 
-      res.status(200).json({ message: 'Successfully updated all users status' });
+      res.status(200).json({ message: 'Update selected users successful' });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update all users status' });
+    res.status(500).json({ message: 'Failed to update multiple users status' });
   }
+};
+
+const updateAllUsersStatus = (req: Request, res: Response) => {
+  const { status } = req.body;
+
+  sql.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to update users status' });
+    }
+
+    res.status(200).json({ message: 'Successfully updated all users status' });
+  });
 };
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
 
-    connection.query(REQUESTS.FIND_USER_BY_ID_AND_DELETE, [userId], (err, result: mysql.ResultSetHeader) => {
+    sql.query(REQUESTS.FIND_USER_BY_ID_AND_DELETE, [userId], (err, result: ResultSetHeader) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ message: 'Failed to delete user' });
       }
 
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+      if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
 
       res.status(200).json({ message: 'User deleted successfully' });
     });
@@ -94,4 +100,4 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, updateUserStatus, updateAllUsersStatus, deleteUser };
+export { getUsers, updateUserStatus, updateMultipleUsersStatus, updateAllUsersStatus, deleteUser };

@@ -1,4 +1,4 @@
-export const Home = (): JSX.Element => {
+export const Home = () => {
   return (
     <div className='w-[1920px] relative overflow-hidden p-0 h-screen'>
       <img

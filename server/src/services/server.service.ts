@@ -10,7 +10,7 @@ import { usersRouter } from '../routes/users';
 
 const app = express();
 
-const connection = mysql.createConnection({
+const sql = mysql.createConnection({
   host: DB_HOST,
   user: DB_USER,
   password: DB_PASSWORD,
@@ -23,4 +23,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(ROUTES.DEFAULT, checkRouter);
 app.use(ROUTES.DEFAULT, authRouter);
 app.use(ROUTES.DEFAULT, usersRouter);
-export { app, connection };
+export { app, sql };

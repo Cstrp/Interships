@@ -1,25 +1,28 @@
 import { DataGrid, GridRowParams, GridRowSelectionModel } from '@mui/x-data-grid';
 import { columns } from './columns';
 import { UsersTableToolbar } from '../UsersTableToolbar/UsersTableToolbar';
-import { useLoading } from '../../../../data';
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import { UsersTableProps } from './usersTableProps';
 
-export const UsersTable = ({ users }: UsersTableProps) => {
-  const { loading } = useLoading();
+export const UsersTable = ({ users, setUsers }: UsersTableProps) => {
   const [rowData, setRowData] = useState<GridRowParams>();
   const [selectAllUsers, setSelectAllUsers] = useState<GridRowSelectionModel>([]);
 
   return (
-    <Box className={'flex flex-col items-center '}>
-      <UsersTableToolbar data={rowData!} selectedUsers={selectAllUsers?.length === users.length} />
+    <Box className={'flex flex-col items-center h-screen py-20'}>
+      <UsersTableToolbar
+        data={rowData!}
+        selectedUsers={selectAllUsers?.length === users.length}
+        setUsers={setUsers}
+        selectedUsersCount={selectAllUsers}
+      />
       <DataGrid
         sx={{ width: '100%' }}
         columns={columns}
         density={'comfortable'}
         rows={users}
-        loading={loading}
+        loading={users.length < 0 || users.length === 0}
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 10 },

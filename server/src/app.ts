@@ -3,7 +3,7 @@ import * as server from './services';
 
 (async () => {
   try {
-    await server.connection.connect();
+    await server.sql.connect();
     server.app.listen(PORT, () => console.log(`Server has been started on http://localhost:${PORT}`));
   } catch (error) {
     console.error(error);
@@ -11,6 +11,6 @@ import * as server from './services';
 })();
 
 process.on('SIGINT', async () => {
-  server.connection.destroy();
+  server.sql.destroy();
   process.exit(0);
 });
