@@ -15,8 +15,12 @@ api.interceptors.response.use(
 
 api.interceptors.request.use((config) => {
   const token = getItem('token');
+  const status = getItem('status');
 
-  if (token) config.headers['Authorization'] = `${token}`;
+  if (token || status) {
+    config.headers['status'] = `${status}`;
+    config.headers['Authorization'] = `${token}`;
+  }
 
   return config;
 });

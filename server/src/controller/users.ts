@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { sql } from '../services';
 import { REQUESTS } from '../enums';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+import { RowDataPacket } from 'mysql2';
+import { MESSAGES } from '../enums/errorMessages';
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -10,20 +11,20 @@ const getUsers = async (req: Request, res: Response) => {
     sql.query(REQUESTS.FIND_USER_BY_ID, [userId], (err, result: RowDataPacket[]) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Failed to retrieve users' });
+        return res.status(500).json({ message: MESSAGES.FAILED });
       }
 
       if (result.length > 0) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: MESSAGES.USER_NOT_FOUND });
       }
 
       sql.query(REQUESTS.SELECT_ALL_USERS, (err, result) => {
         if (err) {
           console.error(err);
-          return res.status(500).json({ message: 'Failed to get users' });
+          return res.status(500).json({ message: MESSAGES.FAILED });
         }
 
-        res.status(200).json({ message: 'Get users successfully', users: result });
+        res.status(200).json({ message: MESSAGES.SUCCESSFULLY, users: result });
       });
     });
   } catch (error) {
@@ -34,70 +35,37 @@ const getUsers = async (req: Request, res: Response) => {
 
 const updateUserStatus = (req: Request, res: Response) => {
   try {
-    const { status, id } = req.body;
-
-    sql.query(REQUESTS.UPDATE_USER_STATUS, [status, id], (err, result: RowDataPacket[]) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Failed to update user status' });
-      }
-
-      if (result.length === 0) return res.status(404).json({ message: 'User not found' });
-
-      res.status(200).json({ message: 'User status updated successfully' });
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to update user status' });
-  }
-};
-
-const updateMultipleUsersStatus = (req: Request, res: Response) => {
-  try {
     const { status, ids } = req.body;
 
-    sql.query(`update users set status = ? where id in (?)`, [status, ids], (err) => {
-      if (err) return res.status(500).json({ message: 'Failed to update selected users status' });
+    sql.query(REQUESTS.UPDATE_USER_STATUS, [status, ids], (err) => {
+      if (err) return res.status(500).json({ message: MESSAGES.FAILED_UPDATE });
 
-      res.status(200).json({ message: 'Update selected users successful' });
+      res.status(200).json({ message: MESSAGES.SUCCESSFULLY_UPDATE });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to update multiple users status' });
+    res.status(500).json({ message: MESSAGES.FAILED });
   }
-};
-
-const updateAllUsersStatus = (req: Request, res: Response) => {
-  const { status } = req.body;
-
-  sql.query(REQUESTS.UPDATE_USERS_STATUS, [status], (err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Failed to update users status' });
-    }
-
-    res.status(200).json({ message: 'Successfully updated all users status' });
-  });
 };
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.id;
+    const { ids } = req.body;
 
-    sql.query(REQUESTS.FIND_USER_BY_ID_AND_DELETE, [userId], (err, result: ResultSetHeader) => {
+    sql.query(REQUESTS.DELETE_USERS, [ids], (err, result: RowDataPacket[]) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Failed to delete user' });
+        return res.status(500).json({ message: MESSAGES.FAILED });
       }
 
-      if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
+      if (result.length === 0) return res.status(404).json({ message: MESSAGES.USER_NOT_FOUND });
 
-      res.status(200).json({ message: 'User deleted successfully' });
+      res.status(200).json({ message: MESSAGES.DELETE_SUCCESS });
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to delete user' });
+    res.status(500).json({ message: MESSAGES.FAILED });
   }
 };
 
-export { getUsers, updateUserStatus, updateMultipleUsersStatus, updateAllUsersStatus, deleteUser };
+export { getUsers, updateUserStatus, deleteUser };

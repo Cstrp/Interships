@@ -23,4 +23,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(ROUTES.DEFAULT, checkRouter);
 app.use(ROUTES.DEFAULT, authRouter);
 app.use(ROUTES.DEFAULT, usersRouter);
+
 export { app, sql };

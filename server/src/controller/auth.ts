@@ -4,15 +4,16 @@ import { User } from '../models';
 import moment from 'moment';
 import { REQUESTS, STATUS } from '../enums';
 import mysql, { RowDataPacket } from 'mysql2';
+import { MESSAGES } from '../enums/errorMessages';
 
 const signIn = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const error = checkBody(req.body, ['email', 'password']);
 
-  if (error) return res.status(400).json({ message: 'Invalid request. Email or password are required' });
+  if (error) return res.status(400).json({ message: MESSAGES.REQ_USERNAME_OR_PASSWORD });
 
   sql.query(REQUESTS.FIND_USER_BY_EMAIL, [email], (err, result: RowDataPacket[]) => {
-    if (err) return res.status(400).json({ message: 'Invalid request.' });
+    if (err) return res.status(400).json({ message: MESSAGES.INVALID_REQUEST });
 
     const user = result[0];
 
@@ -24,12 +25,11 @@ const signIn = async (req: Request, res: Response) => {
         REQUESTS.UPDATE_LAST_VISIT,
         [user.status !== STATUS.DEACTIVATED ? updatedData : null, user.id],
         (err) => {
-          if (err) return res.status(500).json({ message: 'Failed to update user last visit' });
+          if (err) return res.status(500).json({ message: MESSAGES.FAILED_UPDATE_USER_LAST_VISIT });
 
           return res.status(200).json({
             status: user.status,
-            id: user.status === STATUS.ACTIVE ? user.id : null,
-            message: user.status === STATUS.ACTIVE ? 'User authorization successful' : 'Authorization failed',
+            message: user.status === STATUS.ACTIVE ? MESSAGES.SUCCESS_AUTHORIZATION : MESSAGES.FAILED_AUTHORIZATION,
             token: user.status === STATUS.ACTIVE ? `Bearer ${getToken(user.id, email)}` : null,
           });
         },
@@ -42,16 +42,15 @@ const signUp = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
     const error = checkBody(req.body, ['username', 'email', 'password']);
 
-    if (error) return res.status(400).json({ message: 'Username, email, and password are required' });
+    if (error) return res.status(400).json({ message: MESSAGES.REQ_USERNAME_OR_PASSWORD });
 
     sql.query(REQUESTS.FIND_USER_BY_USERNAME_OR_EMAIL, [username, email], (err, results: RowDataPacket[]) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Failed to create a new user' });
+        return res.status(500).json({ message: MESSAGES.FAILED_CREATE_NEW_USER });
       }
 
-      if (results.length > 0)
-        return res.status(400).json({ message: 'User with the same username or email already exists' });
+      if (results.length > 0) return res.status(400).json({ message: MESSAGES.ALREADY_EXIST });
 
       const encryptedPassword = encrypt(password);
 
@@ -71,7 +70,8 @@ const signUp = async (req: Request, res: Response) => {
         }
 
         const userId = results.insertId;
-        return res.status(201).json({ message: 'New user created', userId });
+
+        return res.status(201).json({ message: MESSAGES.SUCCESS_CREATE_USER, userId });
       });
     });
   } catch (err) {

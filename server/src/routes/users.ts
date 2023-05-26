@@ -7,8 +7,6 @@ const usersRouter = express.Router();
 
 usersRouter.get(ROUTES.GET_USERS, jwtMiddleware, authController.getUsers);
 usersRouter.put(ROUTES.UPDATE_USER_STATUS, jwtMiddleware, authController.updateUserStatus);
-usersRouter.put(ROUTES.UPDATE_USERS_STATUS, jwtMiddleware, authController.updateMultipleUsersStatus);
-usersRouter.put(ROUTES.UPDATE_ALL_USER_STATUS, jwtMiddleware, authController.updateAllUsersStatus);
-usersRouter.delete(ROUTES.DELETE, jwtMiddleware, authController.deleteUser);
+usersRouter.put(ROUTES.DELETE, jwtMiddleware, authController.deleteUser);
 
 export { usersRouter };

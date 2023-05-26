@@ -1,6 +1,18 @@
-export const enum ERROR_MESSAGES {
-  BAD_REQUEST = 'Bad request',
-  INVALID_USERNAME = 'Invalid username',
-  INVALID_PASSWORD = 'Invalid password',
-  INVALID_EMAIL = 'Invalid email address',
+export const enum MESSAGES {
+  SUCCESS_AUTHORIZATION = 'Authorization successful.',
+  FAILED_AUTHORIZATION = 'Authorization failed.',
+  REQ_USERNAME_OR_PASSWORD = 'Username, email, and password are required.',
+  FAILED_CREATE_NEW_USER = 'Failed to create a new user.',
+  ALREADY_EXIST = 'A user with the same username or email already exists.',
+  SUCCESS_CREATE_USER = 'New user created successfully.',
+  FAILED_UPDATE_USER_LAST_VISIT = 'Failed to update user last visit.',
+  INVALID_REQUEST = 'Invalid request.',
+  UNAUTHORIZED = 'Unauthorized access.',
+  INVALID_TOKEN = 'Invalid token.',
+  FAILED = 'Operation failed.',
+  SUCCESSFULLY = 'Operation completed successfully.',
+  FAILED_UPDATE = 'Update operation failed.',
+  SUCCESSFULLY_UPDATE = 'Update operation completed successfully.',
+  USER_NOT_FOUND = 'User not found.',
+  DELETE_SUCCESS = 'Deletion completed successfully.',
 }

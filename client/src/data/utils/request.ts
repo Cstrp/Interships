@@ -1,8 +1,6 @@
 import { api, setItem } from '.';
 import { Message, SignInData, User, UserData } from '../types';
 import { STATUS } from '../enums';
-import { GridRowId } from '@mui/x-data-grid';
-import { UpdateStatus } from '../types/updateStatus';
 
 const getUsers = async () => {
   try {
@@ -39,19 +37,9 @@ const signUp = async (value: Pick<User, 'username' | 'email' | 'password'>) => {
   }
 };
 
-const updateStatus = async (upd: UpdateStatus) => {
+const updateStatus = async (upd: { status: STATUS; ids: number[] }) => {
   try {
-    const res = await api.put<Message>(`/users/update`, upd);
-
-    return res.data.message;
-  } catch (error) {
-    console.error(`Error while updating user:  - ${error}`);
-  }
-};
-
-const updateMultipleStatus = async (upd: { status: STATUS; ids: number[] }) => {
-  try {
-    const res = await api.put<Message>('/users/update_multiple', upd);
+    const res = await api.put<Message>('/users/update', upd);
 
     return res.data.message;
   } catch (error) {
@@ -59,24 +47,14 @@ const updateMultipleStatus = async (upd: { status: STATUS; ids: number[] }) => {
   }
 };
 
-const updateAllStatus = async (status: STATUS) => {
+const deleteUser = async (ids: { ids: number[] }) => {
   try {
-    const res = await api.put<Message>('/users/update_all', status);
+    const res = await api.put<Message>(`/users/delete`, ids);
 
-    return res.data.message;
-  } catch (error) {
-    console.error(`Error while updating users status ${error}`);
-  }
-};
-
-const deleteUser = async (id: GridRowId) => {
-  try {
-    const res = await api.delete<Message>(`/users/${id}`);
-
-    return res.data.message;
+    return res.data;
   } catch (error) {
     console.error(`Error while delete user ${error}`);
   }
 };
 
-export { getUsers, signIn, signUp, updateStatus, updateAllStatus, deleteUser, updateMultipleStatus };
+export { getUsers, signIn, signUp, updateStatus, deleteUser };

@@ -6,7 +6,7 @@ export const setItem = (key: string, value: unknown): void => {
   }
 };
 
-export const getItem = (key: string): unknown => {
+export const getItem = (key: string) => {
   try {
     const storedValue = window.localStorage.getItem(key);
     if (storedValue) {

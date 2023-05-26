@@ -4,6 +4,7 @@ import { UsersTableToolbar } from '../UsersTableToolbar/UsersTableToolbar';
 import { useState } from 'react';
 import { Box } from '@mui/material';
 import { UsersTableProps } from './usersTableProps';
+import { formattedUsers } from '../../../../data';
 
 export const UsersTable = ({ users, setUsers }: UsersTableProps) => {
   const [rowData, setRowData] = useState<GridRowParams>();
@@ -21,7 +22,7 @@ export const UsersTable = ({ users, setUsers }: UsersTableProps) => {
         sx={{ width: '100%' }}
         columns={columns}
         density={'comfortable'}
-        rows={users}
+        rows={formattedUsers(users)}
         loading={users.length < 0 || users.length === 0}
         initialState={{
           pagination: {

@@ -5,7 +5,6 @@ export const enum REQUESTS {
   FIND_USER_BY_ID = 'select * from users where id = ?',
   UPDATE_LAST_VISIT = 'update users set last_visit = ? where id = ?',
   CREATE_USER = 'insert into users set ?',
-  UPDATE_USER_STATUS = 'update users set status = ? where id = ?',
-  UPDATE_USERS_STATUS = 'update users set status = ?',
-  FIND_USER_BY_ID_AND_DELETE = 'delete FROM users where id = ?',
+  UPDATE_USER_STATUS = 'update users set status = ? where id in (?)',
+  DELETE_USERS = 'delete from users where id in (?)',
 }
