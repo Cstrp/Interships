@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { getItem } from './localStorage';
+import {STATUS} from "../enums";
 
 export const API_URL = 'http://localhost:3060/api';
 
@@ -17,10 +18,8 @@ api.interceptors.request.use((config) => {
   const token = getItem('token');
   const status = getItem('status');
 
-  if (token || status) {
-    config.headers['status'] = `${status}`;
-    config.headers['Authorization'] = `${token}`;
-  }
+  if (token)  config.headers['Authorization'] = `${token}`;
+  if (status && status !== STATUS.DEACTIVATED) config.headers['status'] = `${status}`;
 
   return config;
 });

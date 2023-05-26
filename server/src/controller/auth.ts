@@ -28,9 +28,10 @@ const signIn = async (req: Request, res: Response) => {
           if (err) return res.status(500).json({ message: MESSAGES.FAILED_UPDATE_USER_LAST_VISIT });
 
           return res.status(200).json({
+            id: user.status === STATUS.ACTIVE ? user.id : null,
             status: user.status,
             message: user.status === STATUS.ACTIVE ? MESSAGES.SUCCESS_AUTHORIZATION : MESSAGES.FAILED_AUTHORIZATION,
-            token: user.status === STATUS.ACTIVE ? `Bearer ${getToken(user.id, email)}` : null,
+            token: user.status === STATUS.ACTIVE ? `Bearer ${getToken(user.id, email, user.status)}` : null,
           });
         },
       );

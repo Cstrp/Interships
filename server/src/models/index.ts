@@ -1,3 +1,3 @@
 export * from './user';
-export * from './decodedToken';
+export * from './decodedData';
 export * from './routes';

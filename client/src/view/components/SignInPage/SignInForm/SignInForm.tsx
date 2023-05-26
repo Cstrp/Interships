@@ -27,8 +27,6 @@ export const SignInForm = () => {
 
               if (i.status === STATUS.ACTIVE) {
                 navigate(ROUTER_PATHS.USERS);
-              } else {
-                navigate(ROUTER_PATHS.DEFAULT);
               }
             }
           });
