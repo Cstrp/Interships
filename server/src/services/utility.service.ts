@@ -19,7 +19,7 @@ const checkBody = (body: object, keys: string[]): string | null => {
   if (bodyKeys.length > keys.length) {
     const props = bodyKeys.filter((prop) => !keys.includes(prop));
 
-    return `Properties ${props.join(',')} should be existing and  will be removed`;
+    return `Properties ${props.join(',')} should be existing and will be removed`;
   }
 
   return null;

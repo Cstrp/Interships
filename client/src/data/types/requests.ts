@@ -1,5 +1,5 @@
 import { STATUS } from '../enums';
-import { User } from './user';
+import { User } from '.';
 
 export interface Requests {
   id: number;
@@ -8,9 +8,3 @@ export interface Requests {
   users: User[];
   token: string;
 }
-
-export type Message = Pick<Requests, 'message'>;
-
-export type UserData = Pick<Requests, 'message' | 'users'>;
-
-export type SignInData = Pick<Requests, 'message' | 'token' | 'status' | 'id'>;

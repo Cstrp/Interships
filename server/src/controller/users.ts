@@ -29,7 +29,7 @@ const getUsers = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Failed to get users' });
+    res.status(500).json({ message: 'Failed to get Dashboard' });
   }
 };
 

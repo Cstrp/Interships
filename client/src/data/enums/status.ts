@@ -1,4 +1,4 @@
 export const enum STATUS {
-  ACTIVE = 'active',
-  DEACTIVATED = 'deactivated',
+    ACTIVE = 'active',
+    DEACTIVATED = 'deactivated',
 }

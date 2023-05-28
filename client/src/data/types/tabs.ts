@@ -1,3 +1,1 @@
-import { ROUTER_PATHS } from '../enums';
-
-export type Tabs = { title: string; link: ROUTER_PATHS };
+export type Tabs = { id: number; label: string; link: string };

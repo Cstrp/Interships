@@ -7,35 +7,40 @@ import mysql, { RowDataPacket } from 'mysql2';
 import { MESSAGES } from '../enums/errorMessages';
 
 const signIn = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  const error = checkBody(req.body, ['email', 'password']);
+  try {
+    const { email, password } = req.body;
+    const error = checkBody(req.body, ['email', 'password']);
 
-  if (error) return res.status(400).json({ message: MESSAGES.REQ_USERNAME_OR_PASSWORD });
+    if (error) return res.status(400).json({ message: MESSAGES.REQ_USERNAME_OR_PASSWORD });
 
-  sql.query(REQUESTS.FIND_USER_BY_EMAIL, [email], (err, result: RowDataPacket[]) => {
-    if (err) return res.status(400).json({ message: MESSAGES.INVALID_REQUEST });
+    sql.query(REQUESTS.FIND_USER_BY_EMAIL, [email], (err, result: RowDataPacket[]) => {
+      if (err) return res.status(400).json({ message: MESSAGES.INVALID_REQUEST });
 
-    const user = result[0];
+      const user = result[0];
 
-    const correctPassword = checkPassword(password, user.password);
-    const updatedData = moment().unix();
+      const correctPassword = checkPassword(password, user?.password);
+      const updatedData = moment().unix();
 
-    if (correctPassword)
-      sql.query(
-        REQUESTS.UPDATE_LAST_VISIT,
-        [user.status !== STATUS.DEACTIVATED ? updatedData : null, user.id],
-        (err) => {
-          if (err) return res.status(500).json({ message: MESSAGES.FAILED_UPDATE_USER_LAST_VISIT });
+      if (correctPassword)
+        sql.query(
+          REQUESTS.UPDATE_LAST_VISIT,
+          [user.status !== STATUS.DEACTIVATED ? updatedData : null, user.id],
+          (err) => {
+            if (err) return res.status(500).json({ message: MESSAGES.FAILED_UPDATE_USER_LAST_VISIT });
 
-          return res.status(200).json({
-            id: user.status === STATUS.ACTIVE ? user.id : null,
-            status: user.status,
-            message: user.status === STATUS.ACTIVE ? MESSAGES.SUCCESS_AUTHORIZATION : MESSAGES.FAILED_AUTHORIZATION,
-            token: user.status === STATUS.ACTIVE ? `Bearer ${getToken(user.id, email, user.status)}` : null,
-          });
-        },
-      );
-  });
+            return res.status(200).json({
+              id: user.status === STATUS.ACTIVE ? user.id : null,
+              status: user.status,
+              message: user.status === STATUS.ACTIVE ? MESSAGES.SUCCESS_AUTHORIZATION : MESSAGES.FAILED_AUTHORIZATION,
+              token: user.status === STATUS.ACTIVE ? `Bearer ${getToken(user.id, email, user.status)}` : null,
+            });
+          },
+        );
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(400).json({ message: MESSAGES.REQ_USERNAME_OR_PASSWORD });
+  }
 };
 
 const signUp = async (req: Request, res: Response) => {

@@ -1,13 +1,10 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material';
 import { SignUpForm } from '../../components';
+import { Card } from '@mui/material';
 
-export const SignUp = (): JSX.Element => {
+export const SignUp = () => {
   return (
-    <Card className={'w-1/2 p-5'}>
-      <CardHeader subheader={<Typography variant={'h4'}>Sign Up</Typography>} />
-      <CardContent>
-        <SignUpForm />
-      </CardContent>
+    <Card className={'p-5 w-1/2 h-1/2'}>
+      <SignUpForm />
     </Card>
   );
 };
