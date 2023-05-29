@@ -1,15 +1,15 @@
 import { CSVLink } from 'react-csv';
-import { Data } from 'react-csv/components/CommonPropTypes';
+import { Data, Headers } from 'react-csv/components/CommonPropTypes';
 
 export const CSV = ({ data }: { data: string | Data }) => {
-  const csvHeaders = [
+  const csvHeaders: Headers = [
     { label: 'id', key: 'id' },
-    { label: 'Identifier', key: 'identifier' },
+    { label: 'identifier', key: 'identifier' },
     { label: 'firstname', key: 'firstname' },
     { label: 'lastname', key: 'lastname' },
     { label: 'address', key: 'address' },
+    { label: 'phone', key: 'phone' },
   ];
-
   return (
     <CSVLink data={data} headers={csvHeaders}>
       Export to CSV
