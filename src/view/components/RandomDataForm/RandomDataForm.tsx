@@ -21,7 +21,7 @@ export const RandomDataForm = ({
         <Select value={region} onChange={(value) => setRegion(value)} options={selectOptions} />
       </Form.Item>
       <Form.Item label={<span className={'text-red-700'}>Errors per record</span>}>
-        <div className="flex">
+        <div className="flex flex-row gap-5">
           <Slider
             className="flex-auto"
             min={0}
@@ -40,13 +40,15 @@ export const RandomDataForm = ({
         </div>
       </Form.Item>
       <Form.Item label={<Typography className="text-green-900 font-extrabold">Seed</Typography>}>
-        <div className="flex">
+        <div className="flex flex-row gap-5">
           <InputNumber
             className="flex-auto"
             value={seed}
             onChange={(value) => setSeed(value ? value : '')}
           />
-          <Button onClick={randomSeed}>Random</Button>
+          <Button onClick={randomSeed} className={'bg-black text-white'}>
+            Randomize the seed
+          </Button>
         </div>
       </Form.Item>
     </Form>
