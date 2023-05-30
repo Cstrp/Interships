@@ -8,9 +8,9 @@ import { Csv, RandomDataForm } from './view/components';
 import { Content } from 'antd/es/layout/layout';
 
 export const App = () => {
-  const [region, setRegion] = useState('pl');
-  const [errorProbability, setErrorProbability] = useState(0);
-  const [seed, setSeed] = useState('');
+  const [region, setRegion] = useState<string>('pl');
+  const [errorProbability, setErrorProbability] = useState<number>(0);
+  const [seed, setSeed] = useState<number>(0);
   const [fakeData, setFakeData] = useState<FakeData[]>([]);
 
   useEffect(() => {
@@ -18,17 +18,16 @@ export const App = () => {
     faker.seed(+seed);
 
     const generateFakeData = generateFakeRecords(20, 0, errorProbability);
-
     setFakeData(generateFakeData);
   }, [region, errorProbability, seed]);
 
   const handleScroll = (evt: React.UIEvent<HTMLDivElement>) => {
-    const bottomOffset =
+    const botPoint =
       evt.currentTarget.scrollHeight - evt.currentTarget.scrollTop ===
       evt.currentTarget.clientHeight;
 
-    if (bottomOffset) {
-      const newFakeData = generateFakeRecords(15, fakeData.length, errorProbability);
+    if (botPoint) {
+      const newFakeData = generateFakeRecords(20, fakeData.length, errorProbability);
       setFakeData((prevFakeData) => [...prevFakeData, ...newFakeData]);
     }
   };

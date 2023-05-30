@@ -5,6 +5,6 @@ export interface RandomDataFormProps {
   setRegion: Dispatch<SetStateAction<string>>;
   errorProbability: number;
   setErrorProbability: Dispatch<SetStateAction<number>>;
-  seed: string;
-  setSeed: Dispatch<SetStateAction<string>>;
+  seed: number;
+  setSeed: Dispatch<SetStateAction<number>>;
 }
