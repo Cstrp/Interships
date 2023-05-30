@@ -1,2 +1,1 @@
-export * from "./fakeData";
-export * from "./region";
+export * from './fakeData';

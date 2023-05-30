@@ -1,3 +1,3 @@
-export * from './getRandNum';
-export * from './getRandErrType';
+export * from './getRandomNumber.ts';
+export * from './getRandomErrorType.ts';
 export * from './cols';

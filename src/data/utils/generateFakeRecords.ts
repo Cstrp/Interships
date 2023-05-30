@@ -1,6 +1,6 @@
 import { FakeData } from '../types';
 import { faker } from '@faker-js/faker';
-import { errorHandler } from './errorHandler.ts';
+import { generateError } from './generateError.ts';
 
 export const generateFakeRecords = (
   count: number,
@@ -25,7 +25,7 @@ export const generateFakeRecords = (
       phone: faker.phone.number(),
     };
 
-    errorHandler(fakeUser, errorProbability ? errorProbability : 0);
+    generateError(fakeUser, errorProbability ? errorProbability : 0);
 
     newFake.push(fakeUser);
   }
