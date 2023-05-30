@@ -1,1 +1,2 @@
-export * from './';
+export * from "./fakeData";
+export * from "./region";
