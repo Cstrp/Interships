@@ -15,7 +15,7 @@ export const App = () => {
 
   useEffect(() => {
     faker.setLocale(region);
-    faker.seed(+seed);
+    faker.seed(seed);
 
     const generateFakeData = generateFakeRecords(20, 0, errorProbability);
     setFakeData(generateFakeData);

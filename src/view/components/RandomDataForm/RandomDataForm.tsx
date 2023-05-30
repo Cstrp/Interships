@@ -12,7 +12,7 @@ export const RandomDataForm = ({
 }: RandomDataFormProps) => {
   const randomSeed = () => {
     const randSd = getRandomNumber(0, 100000);
-    setSeed(randSd.toString());
+    setSeed(randSd);
   };
 
   return (
@@ -44,7 +44,7 @@ export const RandomDataForm = ({
           <InputNumber
             className="flex-auto"
             value={seed}
-            onChange={(value) => setSeed(value ? value : '')}
+            onChange={(value) => setSeed(value ? value : 0)}
           />
           <Button onClick={randomSeed} className={'bg-black text-white'}>
             Randomize the seed
