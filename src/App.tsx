@@ -17,7 +17,7 @@ export const App = () => {
     faker.setLocale(region);
     faker.seed(seed);
 
-    const generateFakeData = generateFakeRecords(20, 0, errorProbability);
+    const generateFakeData = generateFakeRecords(25, 0, errorProbability);
     setFakeData(generateFakeData);
   }, [region, errorProbability, seed]);
 

@@ -4,16 +4,16 @@ import { generateError } from './generateError.ts';
 
 export const generateFakeRecords = (
   count: number,
-  usersLength?: number,
-  errorProbability?: number,
+  usersLength: number,
+  errorProbability: number,
 ) => {
   const newFake = [];
   usersLength = usersLength ? usersLength : 0;
   for (let i = 0; i < count; i++) {
     const fakeUser: FakeData = {
-      key: i + 1 + usersLength,
       id: usersLength + i + 1,
-      identifier: faker.random.numeric(10),
+      key: i + 1 + usersLength,
+      identifier: faker.random.numeric(10, { allowLeadingZeros: true }),
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),
       address:
@@ -25,7 +25,7 @@ export const generateFakeRecords = (
       phone: faker.phone.number(),
     };
 
-    generateError(fakeUser, errorProbability ? errorProbability : 0);
+    generateError(fakeUser, errorProbability);
 
     newFake.push(fakeUser);
   }
