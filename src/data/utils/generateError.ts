@@ -1,19 +1,8 @@
-import { faker } from '@faker-js/faker';
 import { getRandomErrorType } from './getRandomErrorType.ts';
 import { getRandomNumber } from './getRandomNumber.ts';
-import { FakeData } from '../types';
 
-export const generateError = (user: FakeData, errorProbability: number) => {
+export const generateError = (value: string, errorProbability: number) => {
   for (let i = 0; i < errorProbability; i++) {
-    const field: 'firstname' | 'lastname' | 'address' | 'phone' = faker.helpers.arrayElement([
-      'firstname',
-      'lastname',
-      'address',
-      'phone',
-    ]);
-
-    const value = user[field];
-
     const errorType = getRandomErrorType();
 
     const addIdx = getRandomNumber(0, value.length + 1);
@@ -24,13 +13,13 @@ export const generateError = (user: FakeData, errorProbability: number) => {
 
     switch (errorType) {
       case 'add':
-        user[field] = value.slice(0, addIdx) + randomChar + value.slice(addIdx);
+        value = value.slice(0, addIdx) + randomChar + value.slice(addIdx);
         break;
       case 'delete':
-        user[field] = value.slice(0, deleteIdx) + value.slice(deleteIdx + 1);
+        value = value.slice(0, deleteIdx) + value.slice(deleteIdx + 1);
         break;
       case 'swap':
-        user[field] =
+        value =
           value.slice(0, swapIdx) +
           value.charAt(swapIdx + 1) +
           value.charAt(swapIdx) +
@@ -38,4 +27,6 @@ export const generateError = (user: FakeData, errorProbability: number) => {
         break;
     }
   }
+
+  return value;
 };
