@@ -4,10 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "npm run dev --prefix server",
+    "server-install": "pnpm install --prefix server",
+    "client": "npm run start --prefix client",
+    "client-install": "pnpm install --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "concurrently": "^8.1.0",
+    "prettier": "^2.8.8"
+  }
 }
