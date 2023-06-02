@@ -1,19 +1,52 @@
-import * as http from "http";
 import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import { Server } from "socket.io";
+import * as http from "http";
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
+import { ConnectSetup, ServerSetup } from "../controllers";
 
-const ALLOWED_ORIGIN = "http://localhost:5173";
-const app = express();
-const server = http.createServer(app);
-const socket = new Server(server, {
-  cors: { origin: ALLOWED_ORIGIN },
-  serveClient: false,
-});
+class App {
+  private readonly app: express.Application;
+  private readonly server: http.Server;
+  private readonly socketIO: Server;
 
-app.use(cors({ origin: ALLOWED_ORIGIN }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+  private static socketConfig = {
+    cookie: false,
+    pingTimeout: 5000,
+    pingInterval: 10000,
+    cors: { origin: "*" },
+    serveClient: false,
+  };
 
-export { server, socket };
+  constructor() {
+    this.app = express();
+    this.server = createServer(this.app);
+    this.socketIO = new Server(this.server, App.socketConfig);
+
+    this.setupServer();
+    this.setupSocket();
+  }
+
+  private setupServer() {
+    new ServerSetup(this.app);
+  }
+
+  private setupSocket() {
+    this.socketIO.on("connection", (socket: Socket) => {
+      console.log(`New connection: ${socket.id}`);
+
+      new ConnectSetup(this.socketIO, socket);
+
+      socket.on("disconnect", () => {
+        console.log("Disconnected");
+      });
+    });
+  }
+
+  public start(port?: number) {
+    this.server.listen(port, () =>
+      console.log(`Server listening on port ${port} | http://localhost:${port}`)
+    );
+  }
+}
+
+export const app = new App();
