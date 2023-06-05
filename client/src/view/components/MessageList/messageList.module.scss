@@ -1,0 +1,30 @@
+.message__list {
+  display: flex;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  flex-direction: column;
+  gap: 10px;
+
+  &_title {
+    font-size: 24px;
+    font-weight: bolder;
+  }
+}
+
+.message_item {
+  &_title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &_content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &_text {
+    font-size: 14px;
+    font-weight: 300;
+  }
+}

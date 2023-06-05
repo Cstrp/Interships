@@ -1,6 +1,2 @@
-export * from "./userSetup";
-export * from "./topicSetup";
-export * from "./messageSetup";
-
-export * from "./serverSetup";
-export * from "./connectSetup";
+export * from "./users.controller";
+export * from "./messages.controller";

@@ -1,4 +1,4 @@
 {
-  "port": 1337,
-  "dbUrl": "mongodb+srv://root:13SilB4M2p8trGUk@cluster0.rlhd2j8.mongodb.net/?authMechanism=DEFAULT"
+  "port": 3001,
+  "url": "mongodb+srv://root:13SilB4M2p8trGUk@cluster0.rlhd2j8.mongodb.net/?authMechanism=DEFAULT"
 }

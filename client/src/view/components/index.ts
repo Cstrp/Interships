@@ -1,3 +1,3 @@
-export * from "./UserList/UserList";
-export * from "./MessagesList/MessagesList";
-export * from "./MessagesListItem/MessagesListItem";
+export * from "./MessageList/MessageList";
+export * from "./NewUserForm/NewUserForm";
+export * from "./MessageForm/MessageForm";

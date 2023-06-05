@@ -1,56 +1,59 @@
-import "./App.css";
+import "./App.scss";
+import useLocalStorage from "use-local-storage";
+import { MessageForm, MessageList, NewUserForm } from "./view/components";
+import { useEffect, useState } from "react";
+import { Message } from "./data/types";
+import { getMessages } from "./data/api/getMessages.ts";
+import { getUsers } from "./data/api/getUsers.ts";
+import { sendMessage as sendNewMessage } from "./data/api/sendMessage.ts";
+import { Divider } from "antd";
 
-import React from "react";
-import { Button, Form, Input, List } from "antd";
-import { useChat } from "./data/hooks";
+export const App = () => {
+  const [name, setName] = useLocalStorage<string>("name", "");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [recipients, setRecipients] = useState<string[]>([]);
 
-export const App: React.FC = () => {
-  const [form] = Form.useForm();
+  useEffect(() => {
+    const getMsgs = async () => {
+      const data = await getMessages();
+      setMessages(data ? data : []);
+    };
 
-  const { sendMessage } = useChat();
+    const getUsrs = async () => {
+      const users = await getUsers();
 
-  const handleSendMessage = (value: any) => {
-    sendMessage(value);
+      const names = users ? users.map(u => u.name) : [];
+      setRecipients(names);
+    };
+
+    getMsgs();
+    getUsrs();
+  }, []);
+
+  const sendMessage = async (msg: Message) => {
+    const sender = name;
+    const newMessage: Message = { ...msg, sender };
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+    sendNewMessage(newMessage);
   };
 
   return (
-    <div>
-      <Form form={form} layout="vertical" onFinish={handleSendMessage}>
-        <Form.Item
-          label="Recipient"
-          name="user_name"
-          rules={[{ required: true }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item label="Title" name="topic_id" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Message"
-          name="message_content"
-          rules={[{ required: true }]}
-        >
-          <Input.TextArea rows={4} />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Send
-          </Button>
-        </Form.Item>
-      </Form>
+    <div className="app-container">
+      {!name ? (
+        <NewUserForm setName={setName} />
+      ) : (
+        <div className="chat-container">
+          <div className="message-form-container">
+            <MessageForm recipients={recipients} sendMessage={sendMessage} />
+          </div>
 
-      <List
-        dataSource={messages}
-        renderItem={(message) => (
-          <List.Item key={message._id}>
-            <List.Item.Meta
-              title={message.topic_id}
-              description={message.message_content}
-            />
-          </List.Item>
-        )}
-      />
+          <Divider />
+
+          <div className="message-list-container">
+            <MessageList messages={messages} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

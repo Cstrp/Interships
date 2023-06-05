@@ -1,16 +1,16 @@
 import config from "config";
-import * as mongoose from "mongoose";
-import { app } from "./services/server.service";
+import mongoose from "mongoose";
+import { app } from "./services";
 
+const url: string = config.get("url");
 const port: number = config.get("port");
-const db_url: string = config.get("dbUrl");
 
 (async () => {
   try {
-    await mongoose.connect(db_url);
-    app.start(port);
-  } catch (err) {
-    console.error(err);
+    await mongoose.connect(url);
+    app.listen(port, () => console.log(`Server listening on port: ${port}`));
+  } catch (error) {
+    console.error(error);
   }
 })();
 

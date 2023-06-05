@@ -4,5 +4,5 @@ export interface Message {
   recipient: string;
   subject: string;
   content: string;
-  createdAt?: Date;
+  createdAt?: string;
 }
