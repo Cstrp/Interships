@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { api, Message, User, userStore } from "./data";
 import { LoginForm, MessageForm, MessageList, UserList } from "./view";
 import { observer } from "mobx-react";
-import { Typography } from "antd";
+import { Alert, Typography } from "antd";
 
 const { Title } = Typography;
 
@@ -11,36 +11,28 @@ export const App = observer(() => {
   const currentUser = userStore.getUsername();
   const [users, setUsers] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
-  const [showMessageContent, setShowMessageContent] = useState<boolean>(false);
+  const [showNoMessages, setShowNoMessages] = useState<boolean>(false);
 
   useEffect(() => {
-    const getUsers = async () => {
+    const fetchData = async () => {
       try {
-        const res = await api.get<User[]>("/getUsers");
-        setUsers(res.data);
+        const usersResponse = await api.get<User[]>("/getUsers");
+        setUsers(usersResponse.data);
+
+        const messagesResponse = await api.get<Message[]>("/messages");
+        setMessages(messagesResponse.data);
+        setShowNoMessages(messagesResponse.data.length === 0);
       } catch (error) {
         console.error(error);
       }
     };
 
-    const getMessages = async () => {
-      try {
-        const res = await api.get<Message[]>("/messages");
-        setMessages(res.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    fetchData();
 
-    const msgApp = setInterval(() => {
-      getUsers();
-      getMessages();
-    }, 5000);
+    const interval = setInterval(fetchData, 5000);
 
     return () => {
-      clearTimeout(msgApp);
+      clearInterval(interval);
     };
   }, []);
 
@@ -53,7 +45,16 @@ export const App = observer(() => {
 
             <div>
               <div>
-                <MessageList messages={messages} />
+                {showNoMessages ? (
+                  <Alert
+                    message="No messages"
+                    description="You have no messages."
+                    type="info"
+                    showIcon
+                  />
+                ) : (
+                  <MessageList messages={messages} currentUser={currentUser} />
+                )}
               </div>
               <MessageForm users={users} />
             </div>

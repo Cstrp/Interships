@@ -43,13 +43,14 @@ export const MessageForm = observer(({ users }: MessageFormProps) => {
             options={autoCompleteOptions}
             status={"warning"}
             filterOption={autoCompleteFilter}
+            placeholder={"To: ..."}
           />
         </Form.Item>
         <Form.Item name={"subject"}>
-          <Input />
+          <Input placeholder={"Subject..."} />
         </Form.Item>
         <Form.Item name={"body"}>
-          <TextArea />
+          <TextArea placeholder={"Text..."} />
         </Form.Item>
         <Button size={"middle"} htmlType={"submit"}>
           SEND !
