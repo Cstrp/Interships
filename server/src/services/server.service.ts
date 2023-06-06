@@ -1,16 +1,15 @@
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
-import { userRouter } from "../routes/user";
-import { messageRouter } from "../routes/message";
+import { json, urlencoded } from "body-parser";
+import { messagesRouter, usersRouter } from "../routes";
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(json());
 app.use(cors({ origin: "*" }));
+app.use(urlencoded({ extended: true }));
 
-app.use("/api", userRouter);
-app.use("/api", messageRouter);
+app.use("/api", usersRouter);
+app.use("/api", messagesRouter);
 
 export { app };

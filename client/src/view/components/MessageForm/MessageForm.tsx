@@ -1,49 +1,39 @@
-import { AutoComplete, Button, Form, Input } from "antd";
-import { Message } from "../../../data/types";
+import { AutoComplete, Form, Input } from "antd";
+import { autoCompleteFilter, Message } from "../../../data";
+import { MessageFormProps } from "./MessageFormProps.ts";
 
-interface MessageFormProps {
-  recipients: string[];
-  sendMessage: (msg: Message) => Promise<void>;
-}
+const { TextArea } = Input;
 
-export const MessageForm = ({ recipients, sendMessage }: MessageFormProps) => {
-  const [form] = Form.useForm();
+export const MessageForm = ({ users }: MessageFormProps) => {
+  const [form] = Form.useForm<Message>();
 
-  const handleSendMessage = (msg: Message) => {
-    sendMessage(msg);
+  const handleSubmit = (values: Message) => {
+    console.log(values);
     form.resetFields();
   };
 
+  const autoCompleteOptions = users.map(u => ({
+    value: u.userName,
+    label: u.userName,
+  }));
+
   return (
-    <div className="message-form">
-      <Form form={form} onFinish={handleSendMessage}>
-        <Form.Item
-          name="recipient"
-          rules={[{ required: true, message: "Please enter the recipient" }]}
-        >
+    <>
+      <Form form={form} onFinish={handleSubmit}>
+        <Form.Item name={"recipient"}>
           <AutoComplete
-            options={recipients.map(r => ({ value: r, label: r }))}
-            placeholder="Enter recipient"
+            options={autoCompleteOptions}
+            status={"warning"}
+            filterOption={autoCompleteFilter}
           />
         </Form.Item>
-        <Form.Item
-          name="subject"
-          rules={[{ required: true, message: "Please enter the subject" }]}
-        >
-          <Input placeholder="Enter subject" />
+        <Form.Item name={"subject"}>
+          <Input />
         </Form.Item>
-        <Form.Item
-          name="content"
-          rules={[{ required: true, message: "Please enter the message" }]}
-        >
-          <Input.TextArea placeholder="Enter message" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Send
-          </Button>
+        <Form.Item name={"body"}>
+          <TextArea />
         </Form.Item>
       </Form>
-    </div>
+    </>
   );
 };

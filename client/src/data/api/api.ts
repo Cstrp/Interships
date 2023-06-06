@@ -1,7 +1,12 @@
 import axios from "axios";
-import { url as baseURL } from ".";
 
-export const api = axios.create({
-  baseURL,
-  headers: { "Content-Type": "application/json" },
+const url = "http://localhost:1337/api";
+
+const api = axios.create({
+  baseURL: url,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+export { api };

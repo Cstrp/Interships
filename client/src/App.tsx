@@ -1,59 +1,49 @@
-import "./App.scss";
-import useLocalStorage from "use-local-storage";
-import { MessageForm, MessageList, NewUserForm } from "./view/components";
+import "./App.css";
 import { useEffect, useState } from "react";
-import { Message } from "./data/types";
-import { getMessages } from "./data/api/getMessages.ts";
-import { getUsers } from "./data/api/getUsers.ts";
-import { sendMessage as sendNewMessage } from "./data/api/sendMessage.ts";
-import { Divider } from "antd";
+import { api, Message, User, userStore } from "./data";
+import { LoginForm, MessageForm, UserList } from "./view";
+import { observer } from "mobx-react";
+import { Typography } from "antd";
 
-export const App = () => {
-  const [name, setName] = useLocalStorage<string>("name", "");
+const { Title } = Typography;
+
+export const App = observer(() => {
+  const currentUser = userStore.getUsername();
+  const [users, setUsers] = useState<User[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [recipients, setRecipients] = useState<string[]>([]);
 
   useEffect(() => {
-    const getMsgs = async () => {
-      const data = await getMessages();
-      setMessages(data ? data : []);
+    const getUsers = async () => {
+      try {
+        const res = await api.get<User[]>("/getUsers");
+        setUsers(res.data);
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    const getUsrs = async () => {
-      const users = await getUsers();
-
-      const names = users ? users.map(u => u.name) : [];
-      setRecipients(names);
-    };
-
-    getMsgs();
-    getUsrs();
+    getUsers();
   }, []);
 
-  const sendMessage = async (msg: Message) => {
-    const sender = name;
-    const newMessage: Message = { ...msg, sender };
-    setMessages(prevMessages => [...prevMessages, newMessage]);
-    sendNewMessage(newMessage);
-  };
-
   return (
-    <div className="app-container">
-      {!name ? (
-        <NewUserForm setName={setName} />
-      ) : (
-        <div className="chat-container">
-          <div className="message-form-container">
-            <MessageForm recipients={recipients} sendMessage={sendMessage} />
+    <>
+      {currentUser ? (
+        <div>
+          <div>
+            <Title level={2}>Welcome dear... {currentUser}</Title>
+
+            <div>
+              {/*<MessageList messages={[]} />*/}
+              <MessageForm users={users} />
+            </div>
           </div>
-
-          <Divider />
-
-          <div className="message-list-container">
-            <MessageList messages={messages} />
+          <div>
+            <UserList users={users} />
           </div>
         </div>
+      ) : (
+        <LoginForm />
       )}
-    </div>
+    </>
   );
-};
+});

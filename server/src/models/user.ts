@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 import { User } from "../types";
 
-const user = new Schema({
-  name: { type: String, required: true },
+const userSchema = new Schema({
+  userName: { type: String, required: true, unique: false },
 });
 
-export default model<User>("User", user);
+export default model<User>("Users", userSchema);
