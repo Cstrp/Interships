@@ -8,17 +8,15 @@ export const LoginForm = observer(() => {
   const handleSubmit = (values: { userName: string }) => {
     const { userName } = values;
 
-    if (userName) {
-      userStore.setUsername(userName);
-      createUser({ userName });
-      form.resetFields();
-    }
+    userStore.setUsername(userName);
+    createUser({ userName });
+    form.resetFields();
   };
 
   return (
     <Form form={form} onFinish={handleSubmit}>
       <Form.Item name={"userName"}>
-        <Input />
+        <Input placeholder={"Type your name here..."} />
       </Form.Item>
       <Button htmlType={"submit"}>Submit!</Button>
     </Form>

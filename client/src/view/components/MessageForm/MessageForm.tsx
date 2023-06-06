@@ -1,14 +1,32 @@
-import { AutoComplete, Form, Input } from "antd";
-import { autoCompleteFilter, Message } from "../../../data";
+import { AutoComplete, Button, Form, Input } from "antd";
+import {
+  autoCompleteFilter,
+  Message,
+  sendMessage,
+  userStore,
+} from "../../../data";
 import { MessageFormProps } from "./MessageFormProps.ts";
+import { observer } from "mobx-react";
 
 const { TextArea } = Input;
 
-export const MessageForm = ({ users }: MessageFormProps) => {
+export const MessageForm = observer(({ users }: MessageFormProps) => {
   const [form] = Form.useForm<Message>();
 
+  const currentUser = userStore.getUsername();
+
   const handleSubmit = (values: Message) => {
-    console.log(values);
+    const { recipient, subject, body } = values;
+
+    const newMessage: Message = {
+      sender: currentUser,
+      recipient,
+      subject,
+      body,
+    };
+
+    sendMessage(newMessage);
+
     form.resetFields();
   };
 
@@ -33,7 +51,10 @@ export const MessageForm = ({ users }: MessageFormProps) => {
         <Form.Item name={"body"}>
           <TextArea />
         </Form.Item>
+        <Button size={"middle"} htmlType={"submit"}>
+          SEND !
+        </Button>
       </Form>
     </>
   );
-};
+});

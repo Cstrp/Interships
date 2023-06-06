@@ -18,24 +18,18 @@ const sendMessage = async (req: Request, res: Response) => {
   }
 };
 
-const getMessageBySubject = async (req: Request, res: Response) => {
+const getMessages = async (req: Request, res: Response) => {
   try {
-    const { subject } = req.body;
-
-    if (!subject) {
-      return res.status(400).json({ error: "Subject is required" });
-    }
-
-    const messages = await Message.find({ subject }).exec();
+    const messages = await Message.find({}).exec();
 
     if (!messages) {
-      return res.status(404).json({ error: "No messages found" });
+      return res.status(400).json({ error: "No messages found" });
     }
 
-    res.status(200).json({ messages });
-  } catch (err) {
-    console.log(err);
+    res.status(200).json(messages);
+  } catch (error) {
+    console.log(error);
   }
 };
 
-export { sendMessage, getMessageBySubject };
+export { sendMessage, getMessages };
