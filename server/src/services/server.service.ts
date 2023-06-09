@@ -9,7 +9,7 @@ app.use(json());
 app.use(cors({ origin: "*" }));
 app.use(urlencoded({ extended: true }));
 
-app.use("/api", usersRouter);
-app.use("/api", messagesRouter);
+app.use("/", usersRouter);
+app.use("/", messagesRouter);
 
 export { app };
