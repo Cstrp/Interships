@@ -1,16 +1,15 @@
 // server.ts
 import mongoose from "mongoose";
-import config from "config";
 import { app } from "./services";
+import { DB_PASSWORD, DB_USERNAME } from "../config";
 
-const url: string = config.get("url");
-const port: number = config.get("port");
+const url: string = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.rlhd2j8.mongodb.net/`;
 
 (async () => {
   try {
     await mongoose.connect(url);
-    app.listen(port, () =>
-      console.log(`Server has been started: http://localhost:${port}`)
+    app.listen(8080, () =>
+      console.log(`Server has been started: http://localhost:${8080}`)
     );
   } catch (error) {
     console.error(error);
