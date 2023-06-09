@@ -36,26 +36,24 @@ export const MessageForm = observer(({ users }: MessageFormProps) => {
   }));
 
   return (
-    <>
-      <Form form={form} onFinish={handleSubmit}>
-        <Form.Item name={"recipient"}>
-          <AutoComplete
-            options={autoCompleteOptions}
-            status={"warning"}
-            filterOption={autoCompleteFilter}
-            placeholder={"To: ..."}
-          />
-        </Form.Item>
-        <Form.Item name={"subject"}>
-          <Input placeholder={"Subject..."} />
-        </Form.Item>
-        <Form.Item name={"body"}>
-          <TextArea placeholder={"Text..."} />
-        </Form.Item>
-        <Button size={"middle"} htmlType={"submit"}>
-          SEND !
-        </Button>
-      </Form>
-    </>
+    <Form form={form} onFinish={handleSubmit} style={{ width: "100%" }}>
+      <Form.Item name={"recipient"}>
+        <AutoComplete
+          options={autoCompleteOptions}
+          filterOption={autoCompleteFilter}
+          placeholder={"To: ..."}
+          size={"large"}
+        />
+      </Form.Item>
+      <Form.Item name={"subject"}>
+        <Input placeholder={"Subject..."} size={"large"} />
+      </Form.Item>
+      <Form.Item name={"body"}>
+        <TextArea placeholder={"Text..."} size={"small"} rows={5} />
+      </Form.Item>
+      <Button htmlType={"submit"} danger style={{ width: "30%" }}>
+        SEND !
+      </Button>
+    </Form>
   );
 });

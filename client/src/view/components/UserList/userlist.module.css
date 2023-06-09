@@ -1,6 +1,7 @@
 .userList {
-  position: absolute;
-  width: 20%;
-  top: 100px7;
-  right: 100px;
+  width: 100%;
+  position: static;
+  margin-top: 20px;
+  margin-right: auto;
+  margin-left: auto;
 }

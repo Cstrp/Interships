@@ -14,11 +14,27 @@ export const LoginForm = observer(() => {
   };
 
   return (
-    <Form form={form} onFinish={handleSubmit}>
-      <Form.Item name={"userName"}>
-        <Input placeholder={"Type your name here..."} />
+    <Form
+      form={form}
+      onFinish={handleSubmit}
+      style={{
+        width: "60%",
+        padding: 5,
+        display: "flex",
+        flexDirection: "column",
+        gap: 10,
+      }}
+    >
+      <Form.Item name={"userName"} rules={[{ required: true }]}>
+        <Input
+          placeholder={"Type your name here..."}
+          size={"large"}
+          status={"warning"}
+        />
       </Form.Item>
-      <Button htmlType={"submit"}>Submit!</Button>
+      <Button htmlType={"submit"} danger style={{ width: "40%" }}>
+        Submit !!!
+      </Button>
     </Form>
   );
 });

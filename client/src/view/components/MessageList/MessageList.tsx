@@ -1,13 +1,16 @@
-import { Card, notification, Typography } from "antd";
+import { notification, Typography } from "antd";
 import { Message } from "../../../data";
 import { observer } from "mobx-react";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { Collapse } from "antd/lib";
 
 interface MessageListProps {
   messages: Message[];
   currentUser?: string;
 }
+
+const { Panel } = Collapse;
 
 export const MessageList = observer(
   ({ messages, currentUser }: MessageListProps) => {
@@ -37,30 +40,41 @@ export const MessageList = observer(
     }, [messages, currentUser, processedMessageIds]);
 
     return (
-      <div style={{ maxHeight: "300px", overflow: "scroll" }}>
-        {messages
-          .filter(message => message.recipient === currentUser)
-          .map(message => (
-            <Card
-              key={message._id}
-              size={"default"}
-              bordered
-              title={`From: ${message.sender}`}
-              children={
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <Typography.Text strong>
-                    Subject: {message.subject}
-                  </Typography.Text>
-                  <Typography.Text strong>
-                    Created at:{" "}
-                    {message.createdAt
-                      ? moment(message.createdAt).format("DD/MM/YYYY HH:mm ")
-                      : ""}
-                  </Typography.Text>
-                </div>
-              }
-            />
-          ))}
+      <div
+        style={{ maxWidth: "700px", maxHeight: "300px", overflow: "scroll" }}
+      >
+        <Collapse
+          size={"middle"}
+          collapsible={"header"}
+          style={{
+            width: "700px",
+          }}
+        >
+          {messages
+            .filter(message => message.recipient === currentUser)
+            .map(message => (
+              <Panel
+                key={message._id!}
+                header={
+                  <div>
+                    <Typography.Text
+                      strong
+                    >{`From: ${message.sender} | `}</Typography.Text>
+                    <Typography.Text
+                      strong
+                    >{`Subject: ${message.subject}`}</Typography.Text>
+                  </div>
+                }
+                extra={
+                  <Typography.Text>{`Created at: ${moment(
+                    message.createdAt
+                  ).format("DD/MM/YYYY HH:mm")}`}</Typography.Text>
+                }
+              >
+                <Typography.Text>{message.body}</Typography.Text>
+              </Panel>
+            ))}
+        </Collapse>
       </div>
     );
   }
