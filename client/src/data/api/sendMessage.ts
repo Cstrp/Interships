@@ -1,5 +1,5 @@
 import { Message } from "../types";
-import { api } from "./api.ts";
+import { api } from "./api";
 
 export const sendMessage = async (message: Message) => {
   try {
