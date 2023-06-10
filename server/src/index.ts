@@ -1,7 +1,7 @@
 // server.ts
 import mongoose from "mongoose";
 import { app } from "./services";
-import { DB_PASSWORD, DB_USERNAME, PORT } from "../config";
+import { DB_PASSWORD, DB_USERNAME, PORT } from "./config";
 
 const url: string = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@cluster0.rlhd2j8.mongodb.net/`;
 

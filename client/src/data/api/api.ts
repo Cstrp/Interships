@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:1337/api";
+const url = "https://messages-production-883c.up.railway.app/api";
 
 const api = axios.create({
   headers: {
