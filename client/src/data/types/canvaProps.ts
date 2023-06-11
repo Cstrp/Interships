@@ -1,4 +1,4 @@
-export interface HideAndSeekProps {
+export interface CanvaProps {
   width: number;
   height: number;
 }

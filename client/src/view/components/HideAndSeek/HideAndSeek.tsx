@@ -1,17 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { GAMES, Player } from "../../../data";
-import { LoginModal } from "..";
-import { HideAndSeekProps } from "./hideAndSeekProps.ts";
+import { CanvaProps } from "../../../data";
 
-export const HideAndSeek = ({ width, height }: HideAndSeekProps) => {
+export const HideAndSeek = ({ width, height }: CanvaProps) => {
   const { current: socket } = useRef<Socket>(io("http://localhost:3001"));
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const cursorXRef = useRef<number>(width / 2);
   const cursorYRef = useRef<number>(height / 2);
-
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(true);
-  const [playerName, setPlayerName] = useState<string>("");
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,11 +18,6 @@ export const HideAndSeek = ({ width, height }: HideAndSeekProps) => {
         const rect = canvas.getBoundingClientRect();
         cursorXRef.current = evt.clientX - rect.left;
         cursorYRef.current = evt.clientY - rect.top;
-
-        socket?.emit("player:move", {
-          x: cursorXRef.current,
-          y: cursorYRef.current,
-        });
       };
 
       canvas.addEventListener("mousemove", handleMouseMove);
@@ -37,19 +28,15 @@ export const HideAndSeek = ({ width, height }: HideAndSeekProps) => {
         }
       };
     }
-  }, [width, height]);
+  }, [width, height, socket]);
 
-  const handlePlayerJoin = () => {
-    if (playerName) {
-      socket.emit("player:join", playerName, GAMES.HIDE_AND_SEEK);
-      setIsModalVisible(false);
-      setPlayerName("");
-    }
-  };
-
-  socket.on("player:join", (playerData: Player) => {
-    console.log(playerData);
-  });
+  // const handlePlayerJoin = () => {
+  //   if (playerName) {
+  //     socket.emit("player:join", playerName, GAMES.HIDE_AND_SEEK);
+  //     setOpen(false);
+  //     setPlayerName("");
+  //   }
+  // };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -86,17 +73,12 @@ export const HideAndSeek = ({ width, height }: HideAndSeekProps) => {
 
   return (
     <>
-      <LoginModal
-        visible={isModalVisible}
-        onJoin={handlePlayerJoin}
-        onCancel={() => setIsModalVisible(false)}
-      />
       <canvas
         ref={canvasRef}
         style={{ width, height, cursor: "none" }}
         width={width}
         height={height}
-      ></canvas>
+      />
     </>
   );
 };

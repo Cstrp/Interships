@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { generateNoise } from "../utils";
 
 export const useBackground = () => {
@@ -37,26 +37,29 @@ export const useBackground = () => {
     }
   }, []);
 
+  const memoResize = useMemo(() => resize, [resize]);
+  const memoDrawBg = useMemo(() => drawBackground, [drawBackground]);
+
   useEffect(() => {
     let animationFrameId: number | null = null;
 
     const animateBackground = () => {
-      resize();
-      drawBackground();
+      memoResize();
+      memoDrawBg();
       animationFrameId = requestAnimationFrame(animateBackground);
     };
 
     animateBackground();
 
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", memoResize);
 
     return () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", memoResize);
     };
-  }, [resize, drawBackground]);
+  }, [memoResize, memoDrawBg]);
 
   return canvasRef;
 };

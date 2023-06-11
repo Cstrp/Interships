@@ -1,64 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { CanvaProps } from "../../../data";
+import { useEffect, useRef } from "react";
+import { io } from "socket.io-client";
 
-interface GameBoardProps {
-  width: number;
-  height: number;
-}
+export const FetchIfYouCan = ({ width, height }: CanvaProps) => {
+  const { current: socket } = useRef(io("http://localhost:3001"));
 
-export const FetchIfYouCan = ({ width, height }: GameBoardProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [boardSize, setBoardSize] = useState({ width: 10, height: 10 });
-  const tileSize = 50;
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
+    const ctx = canvas?.getContext("2d");
 
-    if (canvas && context) {
-      const resizeCanvas = () => {
-        const { width, height } = canvas.getBoundingClientRect();
-        const newBoardWidth = Math.floor(width / tileSize);
-        const newBoardHeight = Math.floor(height / tileSize);
-
-        setBoardSize({ width: newBoardWidth, height: newBoardHeight });
-        canvas.width = newBoardWidth * tileSize;
-        canvas.height = newBoardHeight * tileSize;
-
-        drawGameBoard();
+    if (canvas && ctx) {
+      const drawBackground = () => {
+        ctx.clearRect(0, 0, width, height);
       };
 
-      const drawGameBoard = () => {
-        if (canvas && context) {
-          context.clearRect(0, 0, canvas.width, canvas.height);
-
-          for (let y = 0; y < boardSize.height; y++) {
-            for (let x = 0; x < boardSize.width; x++) {
-              context.fillStyle = "#ccc";
-              context.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-              context.strokeStyle = "#fff";
-              context.strokeRect(
-                x * tileSize,
-                y * tileSize,
-                tileSize,
-                tileSize
-              );
-            }
-          }
-
-          context.fillStyle = "black";
-        }
-      };
-
-      resizeCanvas();
-      drawGameBoard();
-
-      window.addEventListener("resize", resizeCanvas);
-
-      return () => {
-        window.removeEventListener("resize", resizeCanvas);
-      };
+      drawBackground();
     }
-  }, [boardSize.height, boardSize.width]);
+
+    return () => {
+      if (socket) socket.disconnect();
+    };
+  }, [height, socket, width]);
 
   return (
     <canvas

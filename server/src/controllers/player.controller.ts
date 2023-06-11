@@ -19,14 +19,23 @@ export const playerController = (io: Server, socket: Socket) => {
     if (!players[gameId]) {
       players[gameId] = [];
     }
+    console.log(players);
 
     players[gameId].push(player);
     socket.join(gameId);
 
-    console.log(players);
-
     updatePlayersList(gameId);
   });
 
-  socket.on("disconnect", () => {});
+  socket.on("disconnect", () => {
+    Object.keys(players).forEach(gameId => {
+      players[gameId] = players[gameId].filter(p => p.id !== id);
+
+      if (players[gameId].length === 0) {
+        delete players[gameId];
+      } else {
+        updatePlayersList(gameId);
+      }
+    });
+  });
 };

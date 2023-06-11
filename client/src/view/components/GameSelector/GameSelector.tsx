@@ -1,4 +1,4 @@
-import { Menu, MenuProps } from "antd";
+import { Tabs } from "antd";
 import { selectOptions } from "./selectOptions.tsx";
 import { useNavigate } from "react-router-dom";
 import { RouterPaths } from "../../../data";
@@ -8,22 +8,20 @@ export const GameSelector = () => {
   const [current, setCurrent] = useState<string>(RouterPaths.DEFAULT);
   const navigate = useNavigate();
 
-  const onClick: MenuProps["onClick"] = e => {
-    if (e.key) {
-      setCurrent(e.key);
-      navigate(e.key);
+  const onClick = (key: string) => {
+    if (key) {
+      setCurrent(key);
+      navigate(key);
     }
   };
 
   return (
     <>
-      <Menu
-        mode={"horizontal"}
-        theme={"dark"}
+      <Tabs
         style={{ background: "transparent", color: "white" }}
-        selectedKeys={[current]}
         items={selectOptions}
-        onClick={onClick}
+        defaultActiveKey={current}
+        onChange={onClick}
       />
     </>
   );
