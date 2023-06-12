@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "npm install && rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc"
   },
   "keywords": [],
   "author": "",
