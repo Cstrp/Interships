@@ -1,12 +1,18 @@
-import bodyParser from "body-parser";
-import express from "express";
-import cors from "cors";
-const app = express();
+import { app, sequelize } from "./services";
+import { PORT } from "./config";
 
-app.use(cors({ origin: "*" }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+(async () => {
+  try {
+    await sequelize.authenticate();
+    app.listen(PORT, () =>
+      console.log(`Server has been started on http://localhost:${PORT}`)
+    );
+  } catch (err) {
+    console.error("Unable to connect to the DB | Server", err);
+  }
+})();
 
-app.listen(3001, () => {
-  console.log("Server listening on port 3001");
+process.on("SIGINT", async () => {
+  await sequelize.close();
+  process.exit();
 });

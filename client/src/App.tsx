@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./view/styles/App.css";
+import axios from "axios";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const fetched = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/check");
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetched();
+  }, []);
 
   return (
     <>
