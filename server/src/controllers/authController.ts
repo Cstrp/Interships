@@ -8,7 +8,7 @@ const signIn = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const err = checkBody(req.body, ["email", "password"]);
     const foundedUser = await User.findOne({
-      where: { email },
+      where: { email: email },
     });
 
     if (err) errorHandler(res, 400, "Bad Request");
@@ -23,10 +23,13 @@ const signIn = async (req: Request, res: Response) => {
         res.status(200).json({
           token: `Bearer ${generateToken(foundedUser.dataValues.id, email)}`,
         });
+        console.log(foundedUser.dataValues.id);
+      } else {
+        errorHandler(res, 401, "Incorrect password");
       }
     }
   } catch (error) {
-    errorHandler(res, 500, "Internal Server Error");
+    errorHandler(res, 500, `Internal Server Error ${error}`);
   }
 };
 
