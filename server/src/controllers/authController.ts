@@ -23,9 +23,8 @@ const signIn = async (req: Request, res: Response) => {
         res.status(200).json({
           token: `Bearer ${generateToken(foundedUser.dataValues.id, email)}`,
         });
-        console.log(foundedUser.dataValues.id);
       } else {
-        errorHandler(res, 401, "Incorrect password");
+        errorHandler(res, 401, "Incorrect password or email");
       }
     }
   } catch (error) {
