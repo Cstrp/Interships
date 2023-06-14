@@ -1,51 +1,48 @@
 import express, { Express } from "express";
-import { DataTypes, ModelDefined, Optional, Sequelize } from "sequelize";
-import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from "../config";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { authRouter } from "../routes";
-import { Role, User as U } from "../types";
-import { RouterPaths } from "../types/routerPaths";
+import { RouterPaths } from "../types";
+import { _passportJwt } from "../middlewares";
+import passport from "passport";
+import { collectionsRouter } from "../routes/collectionsRouter";
 
 const app: Express = express();
-const sequelize: Sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  dialect: "mysql",
-  host: DB_HOST,
-});
 
-type UserCreationAttributes = Optional<U, "id" | "role">;
-
-const User: ModelDefined<U, UserCreationAttributes> = sequelize.define(
-  "User",
-  {
-    email: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      unique: true,
-      validate: { isEmail: true },
-    },
-    id: {
-      autoIncrement: true,
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-    password: {
-      allowNull: false,
-      type: DataTypes.STRING,
-      validate: { max: 16, min: 3 },
-    },
-    role: { allowNull: false, defaultValue: Role.USER, type: DataTypes.STRING },
-    username: { allowNull: false, type: DataTypes.STRING },
-  },
-  { tableName: "users", timestamps: true }
-);
-
+app.use(passport.initialize());
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+_passportJwt(passport);
 
+app.use(RouterPaths.DEFAULT, express.static("static"));
 app.use(RouterPaths.DEFAULT, authRouter);
+app.use(RouterPaths.DEFAULT, collectionsRouter);
 
-export { app, sequelize, User };
+// app.get(
+//   "/check",
+//   passport.authenticate("jwt", { session: false }),
+//   async (req, res) => {
+//     res.json({
+//       message: `Authentication successful`,
+//     });
+//   }
+// );
+
+// app.post("/upload", async (req, res) => {
+//   try {
+//     const { image } = req.body;
+//
+//     if (!image) {
+//       return res.status(400).json({ error: "Image data is required" });
+//     }
+//
+//     const imageUrl = await uploadImage(image);
+//     return res.status(200).json({ imageUrl });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ error: "Image upload failed" });
+//   }
+// });
+
+export { app };

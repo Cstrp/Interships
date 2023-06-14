@@ -17,12 +17,6 @@
     "perfectionist"
   ],
   "rules": {
-    "perfectionist/sort-objects": [
-      "error",
-      {
-        "type": "natural",
-        "order": "asc"
-      }
-    ]
+    "@typescript-eslint/ban-ts-comment": 0
   }
 }

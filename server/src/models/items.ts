@@ -1,26 +1,23 @@
-import { DataTypes, Model } from "sequelize";
-import { Item } from "../types/item";
-import { Collection } from "./collection";
-import { CustomFields } from "../types/customFields";
-import { sequelize } from "../services";
+import { model, Schema } from "mongoose";
+import { Items } from "../types";
 
-class Items extends Model<Item> implements Item {
-  id!: number;
-  tags!: string[];
-  title!: string;
+const additionalFields = new Schema({
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  value: { type: Schema.Types.Mixed },
+});
 
-  public customFields?: CustomFields;
-  public readonly collection?: Collection;
-}
-
-Items.init(
+const itemsSchema = new Schema(
   {
-    customFields: { type: DataTypes.JSONB },
-    id: { autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER },
-    tags: { allowNull: false, type: DataTypes.ARRAY(DataTypes.STRING) },
-    title: { allowNull: false, type: DataTypes.STRING },
+    name: { type: String, required: true },
+    tags: [{ type: String }],
+    collectionId: { type: Schema.Types.ObjectId, ref: "", required: true },
+    additionalFields: [additionalFields],
   },
-  { modelName: "", sequelize, tableName: "" }
+  {
+    versionKey: false,
+    timestamps: true,
+  }
 );
 
-export { Items };
+export default model<Items>("Item", itemsSchema);

@@ -1,35 +1,15 @@
-import { DataTypes, Model } from "sequelize";
-import { Collection as Coll } from "../types/collection";
-import { Items } from "./items";
-import { sequelize } from "../services";
-import { User } from "../types";
+import { model, Schema } from "mongoose";
+import { Collections } from "../types";
 
-class Collection extends Model<Coll> implements Coll {
-  public id!: number;
-  public title!: string;
-  public description!: string;
-  public imgSrc?: string;
-  public userId!: number;
-
-  public readonly user?: User;
-  public readonly items?: Items[];
-}
-
-Collection.init(
+const collectionSchema = new Schema(
   {
-    description: { type: DataTypes.TEXT },
-    id: { autoIncrement: true, primaryKey: true, type: DataTypes.INTEGER },
-    imgSrc: { type: DataTypes.STRING },
-    title: { allowNull: false, type: DataTypes.STRING },
-    userId: {
-      allowNull: false,
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-      references: { key: "id", model: "users" },
-      type: DataTypes.INTEGER,
-    },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    theme: { type: String, required: true },
+    imageUrl: { type: String, required: false },
+    userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
   },
-  { modelName: "Collection", sequelize, tableName: "Collection" }
+  { versionKey: false, timestamps: true }
 );
 
-export { Collection };
+export default model<Collections>("Collection", collectionSchema);

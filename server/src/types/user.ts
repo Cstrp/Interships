@@ -1,12 +1,10 @@
-export interface User {
+import { Document } from "mongoose";
+import { Role } from "./role";
+
+export interface User extends Document {
   id?: number;
   username: string;
   email: string;
   password: string;
   role?: Role;
-}
-
-export const enum Role {
-  USER = "user",
-  ADMIN = "admin",
 }

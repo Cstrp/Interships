@@ -6,9 +6,11 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { register } from "../../../data/api/register.ts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import { useSnackbar } from "notistack";
 
 export const RegisterForm = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleShowPass = () => {
     setShowPass(!showPass);
@@ -19,9 +21,7 @@ export const RegisterForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(v, h) => {
-          register(v)
-            .then(r => console.log(r))
-            .catch(e => console.log(e));
+          register(v).then(r => enqueueSnackbar(r?.message));
           h.resetForm();
         }}
         validationSchema={validationSchema}

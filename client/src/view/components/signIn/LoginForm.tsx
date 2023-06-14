@@ -21,9 +21,7 @@ export const LoginForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(v, h) => {
-          login(v)
-            .then(r => console.log(r))
-            .catch(err => console.error(err));
+          login(v);
           h.resetForm();
         }}
         validationSchema={validationSchema}

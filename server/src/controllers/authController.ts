@@ -1,27 +1,22 @@
 import { Request, Response } from "express";
 import { checkBody, checkPassword, encrypt, errorHandler } from "../utils";
 import { generateToken } from "../utils/generateToken";
-import { User } from "../services";
+import User from "../models/user";
 
 const signIn = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const err = checkBody(req.body, ["email", "password"]);
-    const foundedUser = await User.findOne({
-      where: { email: email },
-    });
+    const foundedUser = await User.findOne({ email });
 
-    if (err) errorHandler(res, 400, "Bad Request");
+    if (err) errorHandler(res, 400, `Bad Request, ${err}`);
 
     if (foundedUser) {
-      const correctPassword = checkPassword(
-        password,
-        foundedUser.dataValues.password
-      );
+      const correctPassword = checkPassword(password, foundedUser.password);
 
-      if (correctPassword && foundedUser.dataValues.id) {
+      if (correctPassword && foundedUser.id) {
         res.status(200).json({
-          token: `Bearer ${generateToken(foundedUser.dataValues.id, email)}`,
+          token: `Bearer ${generateToken(foundedUser.id, email)}`,
         });
       } else {
         errorHandler(res, 401, "Incorrect password or email");
@@ -41,7 +36,7 @@ const signUp = async (req: Request, res: Response) => {
     const encryptedPassword = encrypt(password);
 
     if (err) errorHandler(res, 400, "Bad Request");
-    if (foundedUser?.dataValues.email) {
+    if (foundedUser?.email) {
       errorHandler(res, 409, "User already exists!");
       return;
     }
@@ -54,7 +49,7 @@ const signUp = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "New user has been created!" });
   } catch (error) {
-    errorHandler(res, 500, "Internal Server Error");
+    errorHandler(res, 500, `Internal Server Error ${error}`);
   }
 };
 

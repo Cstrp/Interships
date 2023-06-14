@@ -13,7 +13,7 @@ export const Wrapper = ({ children }: { children: ReactNode }) => {
         height: "85vh",
       }}
     >
-      <Box>{children}</Box>
+      <Box sx={{ mt: 10 }}>{children}</Box>
 
       <img
         className="absolute  inset-0 blur z-[-10] w-full h-full object-cover  "
