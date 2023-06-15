@@ -1,7 +1,13 @@
+import { Like } from "./like";
+import { Comment } from "./comment";
+
 export interface Items {
-  id: number;
-  name: string;
+  userId: string;
+  collectionId: string;
+  title: string;
   tags: string[];
-  collectionId: number;
-  customFields?: Record<string, string | number | boolean | Date>;
+  image?: string;
+  fields: Record<string, string | number>;
+  likes: Like[];
+  comments: Comment[];
 }

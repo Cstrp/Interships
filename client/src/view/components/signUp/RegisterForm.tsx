@@ -3,7 +3,7 @@ import { initialValues } from "./initialValues.ts";
 import { validationSchema } from "./validationSchema.ts";
 import { TextFormField } from "../common";
 import { Button, IconButton, Typography } from "@mui/material";
-import { register } from "../../../data/api/register.ts";
+import { register } from "../../../data";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useSnackbar } from "notistack";

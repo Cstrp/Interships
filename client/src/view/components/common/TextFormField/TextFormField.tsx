@@ -11,7 +11,6 @@ export const TextFormField = ({ form, field, ...props }: FieldProps) => {
       margin={"normal"}
       variant={"standard"}
       color="primary"
-      focused
       helperText={getErrorMessage}
       error={!!getErrorMessage}
       {...field}

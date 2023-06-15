@@ -9,10 +9,10 @@ export const Welcome = () => {
       <Typography variant="h2" align="center" gutterBottom>
         Welcome to Collectify!
       </Typography>
-      <Typography variant="h4" align="center">
+      <Typography variant="h6" align="center">
         Application to collect and manage your collections
       </Typography>
-      <Box className={"flex mt-4 p-5 flex-row justify-center"}>
+      <Box className={"flex flex-row justify-center"}>
         <img src={logo} alt="Collectibles" className={"max-w-[555px] "} />
       </Box>
       <Box textAlign="center" marginTop={4}>
@@ -23,10 +23,10 @@ export const Welcome = () => {
           className={"animate-bounce"}
           sx={{
             color: "white",
-            fontSize: "20px",
+            fontSize: "24px",
             px: 4,
-            lineHeight: "30px",
             background: "transparent",
+            textTransform: "inherit",
             backdropFilter: "blur(5px)",
             boxShadow: "0 0 20px 3px rgba(255, 255, 255, 0.4)",
           }}

@@ -1,15 +1,18 @@
 import { model, Schema } from "mongoose";
 import { Collections } from "../types";
+import { fieldSchema } from "./field";
 
 const collectionSchema = new Schema(
   {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
     theme: { type: String, required: true },
     imageUrl: { type: String, required: false },
-    userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+    fields: { type: [fieldSchema], required: false },
+    items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   },
   { versionKey: false, timestamps: true }
 );
 
-export default model<Collections>("Collection", collectionSchema);
+export default model<Collections>("Collections", collectionSchema);
