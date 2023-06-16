@@ -2,11 +2,14 @@ import express from "express";
 import {
   createItem,
   deleteItem,
+  getItemByCollectionId,
   updateItem,
 } from "../controllers/itemController";
 import passport from "passport";
 
 const itemsRouter = express.Router();
+
+itemsRouter.get("/items", getItemByCollectionId);
 
 itemsRouter.post(
   "/items/create",

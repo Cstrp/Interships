@@ -25,7 +25,8 @@ collectionsRouter.put(
 
 collectionsRouter.delete(
   "/collections/:id",
-  passport.authenticate("jwt", { session: false }, removeCollection)
+  passport.authenticate("jwt", { session: false }),
+  removeCollection
 );
 
 export { collectionsRouter };

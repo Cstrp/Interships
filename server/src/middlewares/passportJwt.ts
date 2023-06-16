@@ -16,7 +16,7 @@ const _passportJwt = (passport: PassportStatic) => {
   passport.use(
     new JwtStrategy(options, async (payload, done: VerifiedCallback) => {
       try {
-        const user = await User.findById(payload.id).select("email id");
+        const user = await User.findById(payload.id);
 
         if (user) {
           done(null, user);
@@ -24,7 +24,7 @@ const _passportJwt = (passport: PassportStatic) => {
           done(null, false);
         }
       } catch (error) {
-        return console.log(error);
+        console.log(error);
       }
     })
   );

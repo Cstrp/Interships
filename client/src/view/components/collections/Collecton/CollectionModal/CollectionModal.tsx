@@ -10,14 +10,19 @@ import {
 } from "@mui/material";
 import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
 import { CollectionModalProps } from "./CollectionModalProps.ts";
-import { initialValues } from "./initialValues.ts";
-import { TextFormField } from "../../common";
+import { TextFormField } from "../../../common";
 import { AddBox, Delete } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { api, createCollection } from "../../../../data";
+import { api, createCollection } from "../../../../../data";
 import { useSnackbar } from "notistack";
+import { updateCollection } from "../../../../../data/api/updateCollection.ts";
 
-export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
+export const CollectionModal = ({
+  isOpen,
+  onClose,
+  collection,
+  collectionId,
+}: CollectionModalProps) => {
   const [themes, setThemes] = useState<string[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -35,6 +40,14 @@ export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
     fetchThemes();
   }, []);
 
+  const initialValues = {
+    name: collection?.name || "",
+    theme: collection?.theme || "",
+    description: collection?.description || "",
+    imageUrl: collection?.imageUrl || "",
+    fields: collection?.fields || [{ type: "", name: "" }],
+  };
+
   return (
     <Modal
       open={isOpen}
@@ -47,14 +60,23 @@ export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
           <Formik
             initialValues={initialValues}
             onSubmit={(v, h) => {
-              createCollection(v).then(r => enqueueSnackbar(r?.message));
-              h.resetForm();
+              if (collectionId) {
+                updateCollection(collectionId, v).then(m =>
+                  enqueueSnackbar(m?.message)
+                );
+                h.resetForm();
+              } else {
+                createCollection(v).then(m => enqueueSnackbar(m?.message));
+                h.resetForm();
+              }
             }}
           >
             {({ values }) => (
               <Form className="flex flex-col gap-7 max-h-full py-2">
                 <Typography variant={"h5"} sx={{ textTransform: "uppercase" }}>
-                  Create new collection!
+                  {collectionId
+                    ? "Update collection"
+                    : "Create new collection!"}
                 </Typography>
                 <Field
                   name="name"
@@ -85,9 +107,9 @@ export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
                   name="description"
                   component={TextFormField}
                   placeholder="Enter the description of your collection"
+                  value={collection?.description}
                 />
                 <Field
-                  type={"file"}
                   name="imageUrl"
                   component={TextFormField}
                   placeholder="Enter the image URL"
@@ -137,7 +159,7 @@ export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
                   )}
                 />
                 <Button type={"submit"} variant={"outlined"} color={"inherit"}>
-                  Create!
+                  {collectionId ? "Update!" : "Create!"}
                 </Button>
               </Form>
             )}

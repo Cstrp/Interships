@@ -5,6 +5,21 @@ import { User } from "../types";
 import Collection from "../models/collection";
 import { uploadImage } from "../utils/uploadImage";
 
+const getItemByCollectionId = async (req: Request, res: Response) => {
+  try {
+    const { collectionId } = req.body;
+    const item = await Item.findOne({ collectionId });
+
+    if (!item) {
+      errorHandler(res, 404, "Item not found");
+    }
+
+    res.status(200).json([item]);
+  } catch (err) {
+    errorHandler(res, 500, `Internal Server Error: ${err}`);
+  }
+};
+
 const createItem = async (req: Request, res: Response) => {
   try {
     const user = req.user as User;
@@ -61,4 +76,4 @@ const deleteItem = async (req: Request, res: Response) => {
   }
 };
 
-export { createItem, updateItem, deleteItem };
+export { getItemByCollectionId, createItem, updateItem, deleteItem };

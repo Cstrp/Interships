@@ -1,41 +1,57 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import axios from "axios";
 import {
   CollectionList,
   CreateBtn,
-  ItemList,
+  ItemsList,
   TagCloud,
 } from "../../components";
-import { Collections as Collection, ROUTER_PATHS } from "../../../data";
+import {
+  api,
+  Collections as Collection,
+  isAuth,
+  ROUTER_PATHS,
+} from "../../../data";
+import { CircularProgress } from "@mui/material";
 
 export const Collections = () => {
   const location = useLocation();
   const [collections, setCollections] = useState<Collection[]>([]);
-
-  const fetchCollections = async () => {
-    try {
-      const res = await axios.get<{ collections: Collection[] }>(
-        "http://localhost:8080/api/collections"
-      );
-
-      setCollections(res.data.collections);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const res = await api.get<{ collections: Collection[] }>(
+          "/collections"
+        );
+
+        setCollections(res.data.collections);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoaded(true);
+      }
+    };
+
     fetchCollections();
   }, []);
 
   return (
     <>
-      <ItemList />
+      <ItemsList />
       {location.pathname === ROUTER_PATHS.COLLECTIONS ? (
         <>
-          <CollectionList collection={collections} />
-          <CreateBtn />
+          {loaded ? (
+            <>
+              <CollectionList collection={collections} />
+              {isAuth() && <CreateBtn />}
+            </>
+          ) : (
+            <div className={"flex items-center justify-center"}>
+              <CircularProgress color="inherit" />
+            </div>
+          )}
         </>
       ) : (
         <Outlet />

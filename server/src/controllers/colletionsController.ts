@@ -50,9 +50,17 @@ const createCollection = async (req: Request, res: Response) => {
 
 const updateCollection = async (req: Request, res: Response) => {
   try {
+    const user = req.user as User;
+
+    if (!user) {
+      errorHandler(res, 401, "Unauthorized!");
+      return;
+    }
+
     const updatedCollection = await Collections.findOneAndUpdate(
       {
         _id: req.params.id,
+        userId: user._id,
       },
       { $set: req.body },
       { new: true }
@@ -73,27 +81,29 @@ const updateCollection = async (req: Request, res: Response) => {
 const removeCollection = async (req: Request, res: Response) => {
   try {
     const user = req.user as User;
-
     if (!user) {
       errorHandler(res, 401, "Unauthorized!");
       return;
     }
 
-    const collectionId = req.params.collectionId;
-    const removeRes = await Collections.deleteOne({
-      _id: collectionId,
+    const collection = await Collections.findOne({
+      _id: req.params.id,
       userId: user._id,
     });
 
-    await Item.deleteMany({ collectionId });
+    if (collection) {
+      collection?.deleteOne();
+      await Item.deleteMany({
+        collectionId: req.params.id,
+        userId: user._id,
+      });
 
-    if (removeRes.deletedCount === 0) {
-      errorHandler(res, 404, "Collection is not found");
+      res.status(200).json({ message: "Collection has been deleted" });
+    } else {
+      errorHandler(res, 404, "Collection not found & not removed!");
     }
-
-    res.status(200).json({ message: "Collection has been deleted" });
   } catch (error) {
-    errorHandler(res, 500, `Internal Server Error ${error}`);
+    console.log(error);
   }
 };
 

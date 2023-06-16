@@ -1,4 +1,4 @@
-import { Collections } from "../../../../data";
+import { Collections } from "../../../../../data";
 
 export const initialValues: Collections = {
   name: "",
