@@ -9,7 +9,7 @@ import passport from "passport";
 
 const itemsRouter = express.Router();
 
-itemsRouter.get("/items", getItemByCollectionId);
+itemsRouter.get("/items/:id", getItemByCollectionId);
 
 itemsRouter.post(
   "/items/create",

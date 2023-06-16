@@ -7,7 +7,7 @@ import { uploadImage } from "../utils/uploadImage";
 
 const getItemByCollectionId = async (req: Request, res: Response) => {
   try {
-    const { collectionId } = req.body;
+    const collectionId = req.params.id;
     const item = await Item.findOne({ collectionId });
 
     if (!item) {

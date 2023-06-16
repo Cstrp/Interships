@@ -12,9 +12,9 @@ export const Item = () => {
   useEffect(() => {
     const fetchedItems = async () => {
       try {
-        const res = await api.get("/items", { data: collectionId });
+        const res = await api.get<Items[]>("/items", collectionId);
 
-        console.log(res);
+        setItems(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -22,6 +22,8 @@ export const Item = () => {
 
     fetchedItems();
   }, [collectionId]);
+
+  console.log(items);
 
   return <NoData />;
 };
