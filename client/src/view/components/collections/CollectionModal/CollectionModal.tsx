@@ -87,6 +87,7 @@ export const CollectionModal = ({ isOpen, onClose }: CollectionModalProps) => {
                   placeholder="Enter the description of your collection"
                 />
                 <Field
+                  type={"file"}
                   name="imageUrl"
                   component={TextFormField}
                   placeholder="Enter the image URL"

@@ -8,8 +8,12 @@ import passport from "passport";
 import { collectionsRouter } from "../routes/collectionsRouter";
 import { itemsRouter } from "../routes/itemsRouter";
 import { commentsRouter } from "../routes/commentsRouter";
+import Multer from "multer";
+import multer from "multer";
 
 const app: Express = express();
+const storage: multer.StorageEngine = Multer.memoryStorage();
+const upload = Multer({ storage });
 
 app.use(passport.initialize());
 app.use(cors({ origin: "*" }));
@@ -51,4 +55,4 @@ app.get(
 //   }
 // });
 
-export { app };
+export { app, upload };
