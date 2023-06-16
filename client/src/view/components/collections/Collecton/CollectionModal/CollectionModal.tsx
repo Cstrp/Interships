@@ -107,12 +107,12 @@ export const CollectionModal = ({
                   name="description"
                   component={TextFormField}
                   placeholder="Enter the description of your collection"
-                  value={collection?.description}
                 />
                 <Field
                   name="imageUrl"
-                  component={TextFormField}
+                  component={TextField}
                   placeholder="Enter the image URL"
+                  type="file"
                 />
                 <FieldArray
                   name="fields"
