@@ -8,10 +8,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Collections, Login, Search } from "@mui/icons-material";
-import { ROUTER_PATHS } from "../../../../data";
+import {
+  Collections,
+  DarkMode,
+  LightMode,
+  Login,
+  Search,
+} from "@mui/icons-material";
+import { ROUTER_PATHS, themeStore } from "../../../../data";
+import { observer } from "mobx-react";
 
-export const Header = () => {
+export const Header = observer(() => {
+  const theme = themeStore.theme;
+
+  const handleChangeTheme = () => {
+    themeStore.changeTheme();
+  };
+
   return (
     <>
       <AppBar position="static" color={"transparent"} elevation={20}>
@@ -38,6 +51,9 @@ export const Header = () => {
             InputProps={{ startAdornment: <Search className={"mr-3"} /> }}
           />
 
+          <IconButton onClick={handleChangeTheme}>
+            {theme === "dark" ? <DarkMode /> : <LightMode />}
+          </IconButton>
           <Button
             component={Link}
             to={ROUTER_PATHS.SIGN_IN}
@@ -50,4 +66,4 @@ export const Header = () => {
       </AppBar>
     </>
   );
-};
+});

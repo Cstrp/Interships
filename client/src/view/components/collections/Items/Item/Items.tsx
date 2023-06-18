@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { Item as I } from "../../../../../data/types/item.ts";
 import { useLocation } from "react-router-dom";
 import { api, itemsStore } from "../../../../../data";
-import { ItemsList } from "../ItemsList/ItemsList.tsx";
+import { ItemsTable } from "../ItemsTable/ItemsTable.tsx";
 import { observer } from "mobx-react";
 
-export const Item = observer(() => {
+export const Items = observer(() => {
   const location = useLocation();
   const collectionId = location.pathname.split("/")[2];
 
@@ -26,7 +26,7 @@ export const Item = observer(() => {
 
   return (
     <>
-      {itemsStore.items ? <ItemsList items={itemsStore.items} /> : <NoData />}
+      {itemsStore.items ? <ItemsTable items={itemsStore.items} /> : <NoData />}
     </>
   );
 });

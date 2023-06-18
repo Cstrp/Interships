@@ -1,5 +1,5 @@
-import { Collection } from "../types";
-import { api } from "./apiInterceptor.ts";
+import { Collection } from "../../types";
+import { api } from "../apiInterceptor.ts";
 
 export const updateCollection = async (
   collectionId: string,

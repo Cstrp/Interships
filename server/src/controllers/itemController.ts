@@ -20,6 +20,22 @@ const getItemByCollectionId = async (req: Request, res: Response) => {
   }
 };
 
+const getItemById = async (req: Request, res: Response) => {
+  try {
+    const itemId = req.params.id;
+    const item = await Item.findById(itemId).exec();
+
+    if (!item) {
+      errorHandler(res, 404, "Item not found");
+      return;
+    }
+
+    res.status(200).json(item);
+  } catch (error) {
+    errorHandler(res, 500, `Internal server Error ${error}`);
+  }
+};
+
 const createItem = async (req: Request, res: Response) => {
   try {
     const { collectionId, title, tags, image, fields, likes } = req.body;
@@ -67,16 +83,19 @@ const likeItem = async (req: Request, res: Response) => {
       return;
     }
 
-    const existingLike = item.likes.find(like => like.userId === user._id);
+    const foundedLike = item.likes.find(
+      like => like.userId.toString() === user._id.toString()
+    );
 
-    if (existingLike) {
-      item.likes = item.likes.filter(like => like.userId !== user._id);
+    if (foundedLike) {
+      foundedLike.isLiked = !foundedLike.isLiked;
     } else {
       const newLike: Likes = {
-        itemId: itemId,
         userId: user._id,
+        itemId,
         isLiked: true,
       };
+
       item.likes.push(newLike);
     }
 
@@ -125,4 +144,11 @@ const deleteItem = async (req: Request, res: Response) => {
   }
 };
 
-export { getItemByCollectionId, createItem, likeItem, updateItem, deleteItem };
+export {
+  getItemByCollectionId,
+  getItemById,
+  createItem,
+  likeItem,
+  updateItem,
+  deleteItem,
+};

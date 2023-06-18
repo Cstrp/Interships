@@ -1,12 +1,16 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router.tsx";
 import { ThemeProvider } from "@mui/material";
-import { darkTheme } from "./view/styles/theme/darkTheme.ts";
+import { darkTheme, lightTheme } from "./view/styles";
 import { SnackbarProvider } from "notistack";
+import { observer } from "mobx-react";
+import { themeStore } from "./data";
 
-export const App = () => {
+export const App = observer(() => {
+  const theme = themeStore.theme === "dark" ? darkTheme : lightTheme;
+
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <SnackbarProvider
         autoHideDuration={3000}
         variant={"info"}
@@ -18,4 +22,4 @@ export const App = () => {
       </SnackbarProvider>
     </ThemeProvider>
   );
-};
+});

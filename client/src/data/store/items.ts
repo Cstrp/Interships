@@ -5,6 +5,7 @@ import { Collection } from "../types";
 
 class ItemsStore {
   public items: Item[] = [];
+  public item: Item = {} as Item;
 
   private collection: Collection[] = [];
 
@@ -16,6 +17,10 @@ class ItemsStore {
 
   public setItems(items: Item[]): void {
     this.items = items;
+  }
+
+  public setItem(item: Item): void {
+    this.item = item;
   }
 
   public addItem(collectionId: string, item: Item): void {

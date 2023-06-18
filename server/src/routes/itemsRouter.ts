@@ -3,6 +3,7 @@ import {
   createItem,
   deleteItem,
   getItemByCollectionId,
+  getItemById,
   likeItem,
   updateItem,
 } from "../controllers/itemController";
@@ -11,6 +12,7 @@ import passport from "passport";
 const itemsRouter = express.Router();
 
 itemsRouter.get("/items/:id", getItemByCollectionId);
+itemsRouter.get("/item/:id", getItemById);
 
 itemsRouter.post(
   "/items/create",

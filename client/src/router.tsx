@@ -2,9 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import { ROUTER_PATHS } from "./data";
 import {
   Collections,
+  DetailedItem,
   Header,
   Home,
-  Item,
+  Items,
   Login,
   Register,
   Wrapper,
@@ -28,7 +29,13 @@ export const router = createBrowserRouter(
         {
           path: ROUTER_PATHS.COLLECTIONS,
           element: <Collections />,
-          children: [{ path: "/collections/:collectionId", element: <Item /> }],
+          children: [
+            { path: "/collections/:collectionId", element: <Items /> },
+          ],
+        },
+        {
+          path: "/items/:itemId",
+          element: <DetailedItem />,
         },
       ],
     },

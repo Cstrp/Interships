@@ -1,10 +1,9 @@
 import { ButtonGroup, IconButton, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Delete, Details, Edit } from "@mui/icons-material";
-import { removeCollection } from "../../../../../data/api/removeCollection.ts";
+import { Collection, isAuth, removeCollection } from "../../../../../data";
 import { useState } from "react";
-import { Collection, isAuth } from "../../../../../data";
-import { CollectionModal } from "../CollectionModal/CollectionModal.tsx";
+import { CollectionModal } from "..";
 
 export const CollectionItemActions = ({
   collectionId,

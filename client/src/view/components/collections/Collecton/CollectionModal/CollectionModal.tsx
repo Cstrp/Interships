@@ -1,21 +1,17 @@
 import {
   Autocomplete,
   Button,
-  ButtonGroup,
-  IconButton,
   Modal,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
 import { CollectionModalProps } from "./CollectionModalProps.ts";
-import { TextFormField } from "../../../common";
-import { AddBox, Delete } from "@mui/icons-material";
+import { FieldsArray, TextFormField } from "../../../common";
 import { useEffect, useState } from "react";
 import { api, createCollection } from "../../../../../data";
 import { useSnackbar } from "notistack";
-import { updateCollection } from "../../../../../data/api/updateCollection.ts";
+import { updateCollection } from "../../../../../data/api/collection/updateCollection.ts";
 
 export const CollectionModal = ({
   isOpen,
@@ -116,45 +112,10 @@ export const CollectionModal = ({
                 <FieldArray
                   name="fields"
                   render={arrayHelpers => (
-                    <>
-                      {values.fields.map((_, idx) => (
-                        <div key={idx} className="flex-grow">
-                          <Field
-                            name={`fields.${idx}.type`}
-                            component={TextFormField}
-                            placeholder="Enter the field type"
-                          />
-                          <Field
-                            name={`fields.${idx}.name`}
-                            component={TextFormField}
-                            placeholder="Enter the field name"
-                          />
-                          <ButtonGroup>
-                            <Tooltip title={"Add"}>
-                              <IconButton
-                                onClick={() => {
-                                  arrayHelpers.insert(idx, {
-                                    type: "",
-                                    name: "",
-                                  });
-                                }}
-                              >
-                                <AddBox />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title={"Remove"}>
-                              <IconButton
-                                onClick={() => {
-                                  arrayHelpers.remove(idx);
-                                }}
-                              >
-                                <Delete />
-                              </IconButton>
-                            </Tooltip>
-                          </ButtonGroup>
-                        </div>
-                      ))}
-                    </>
+                    <FieldsArray
+                      fields={values.fields}
+                      helpers={arrayHelpers}
+                    />
                   )}
                 />
                 <Button type={"submit"} variant={"outlined"} color={"inherit"}>

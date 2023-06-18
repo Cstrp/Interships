@@ -1,2 +1,5 @@
-export * from "./Item/Item.tsx";
-export * from "./ItemsList/ItemsList.tsx";
+export * from "./Item/Items.tsx";
+export * from "./ItemsTable/ItemsTable.tsx";
+export * from "./ItemActions/ItemActions.tsx";
+export * from "./ItemModal/ItemModal.tsx";
+export * from "./DetailedItem/DetailedItem.tsx";
