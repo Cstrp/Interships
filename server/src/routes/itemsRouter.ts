@@ -3,6 +3,8 @@ import {
   createItem,
   deleteItem,
   getItemByCollectionId,
+  likeItem,
+  unLikeItem,
   updateItem,
 } from "../controllers/itemController";
 import passport from "passport";
@@ -17,8 +19,20 @@ itemsRouter.post(
   createItem
 );
 
+itemsRouter.post(
+  "/items/:id/like",
+  passport.authenticate("jwt", { session: false }),
+  likeItem
+);
+
+itemsRouter.post(
+  "/items/:id/unlike",
+  passport.authenticate("jwt", { session: false }),
+  unLikeItem
+);
+
 itemsRouter.put(
-  "/item/:id",
+  "/items/:id",
   passport.authenticate("jwt", { session: false }),
   updateItem
 );

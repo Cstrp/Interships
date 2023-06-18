@@ -92,10 +92,9 @@ const removeCollection = async (req: Request, res: Response) => {
     });
 
     if (collection) {
-      collection?.deleteOne();
+      collection.deleteOne();
       await Item.deleteMany({
         collectionId: req.params.id,
-        userId: user._id,
       });
 
       res.status(200).json({ message: "Collection has been deleted" });

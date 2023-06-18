@@ -25,7 +25,5 @@ export const Item = () => {
     fetchedItems();
   }, [collectionId]);
 
-  console.log(items);
-
-  return <>{items ? <ItemsList items={items} /> : <NoData />}</>;
+  return <>{items.length ? <ItemsList items={items} /> : <NoData />}</>;
 };

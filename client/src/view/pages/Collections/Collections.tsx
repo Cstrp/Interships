@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import {
-  CollectionList,
-  CreateBtn,
-  ItemsList,
-  TagCloud,
-} from "../../components";
+import { CollectionList, CreateBtn, TagCloud } from "../../components";
 import {
   api,
   Collections as Collection,
@@ -39,7 +34,6 @@ export const Collections = () => {
 
   return (
     <>
-      <ItemsList />
       {location.pathname === ROUTER_PATHS.COLLECTIONS ? (
         <>
           {loaded ? (
@@ -56,6 +50,7 @@ export const Collections = () => {
       ) : (
         <Outlet />
       )}
+
       <TagCloud />
     </>
   );

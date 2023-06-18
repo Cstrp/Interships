@@ -14,9 +14,7 @@ const uploadImage = async (file: string) => {
       unique_filename: false,
       overwrite: true,
       resource_type: "auto",
-      transformation: [
-        { width: 250, height: 250, gravity: "auto", crop: "thumb" },
-      ],
+      transformation: [{ width: 250, height: 250 }],
     });
 
     return res.secure_url;

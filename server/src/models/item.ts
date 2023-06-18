@@ -12,7 +12,7 @@ const itemsSchema = new Schema(
     tags: { type: [String], required: true },
     image: { type: String },
     fields: { type: Schema.Types.Mixed, required: true },
-    likes: [{ type: Schema.Types.ObjectId, ref: "Like" }],
+    likesCount: { type: Number, required: false },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {

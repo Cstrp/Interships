@@ -1,4 +1,3 @@
-import { Like } from "./like";
 import { Comment } from "./comment";
 
 export interface Items {
@@ -8,6 +7,6 @@ export interface Items {
   tags: string[];
   image?: string;
   fields: Record<string, string | number>;
-  likes: Like[];
+  likesCount: number;
   comments: Comment[];
 }

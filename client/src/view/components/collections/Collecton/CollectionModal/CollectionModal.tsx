@@ -110,9 +110,8 @@ export const CollectionModal = ({
                 />
                 <Field
                   name="imageUrl"
-                  component={TextField}
+                  component={TextFormField}
                   placeholder="Enter the image URL"
-                  type="file"
                 />
                 <FieldArray
                   name="fields"
