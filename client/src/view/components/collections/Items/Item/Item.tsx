@@ -1,22 +1,21 @@
 import { NoData } from "../../../common";
-import { useEffect, useState } from "react";
-import { Items } from "../../../../../data/types/items.ts";
+import { useEffect } from "react";
+import { Item as I } from "../../../../../data/types/item.ts";
 import { useLocation } from "react-router-dom";
-import { api } from "../../../../../data";
+import { api, itemsStore } from "../../../../../data";
 import { ItemsList } from "../ItemsList/ItemsList.tsx";
+import { observer } from "mobx-react";
 
-export const Item = () => {
-  const [items, setItems] = useState<Items[]>([]);
+export const Item = observer(() => {
   const location = useLocation();
   const collectionId = location.pathname.split("/")[2];
 
-  console.log(collectionId);
   useEffect(() => {
     const fetchedItems = async () => {
       try {
-        const res = await api.get<Items[]>(`/items/${collectionId}`);
+        const res = await api.get<I[]>(`/items/${collectionId}`);
 
-        setItems(res.data);
+        itemsStore.setItems(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -25,5 +24,9 @@ export const Item = () => {
     fetchedItems();
   }, [collectionId]);
 
-  return <>{items.length ? <ItemsList items={items} /> : <NoData />}</>;
-};
+  return (
+    <>
+      {itemsStore.items ? <ItemsList items={itemsStore.items} /> : <NoData />}
+    </>
+  );
+});

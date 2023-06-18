@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { Items } from "../types";
+import { likesSchema } from "./likes";
 
 const itemsSchema = new Schema(
   {
@@ -12,7 +13,7 @@ const itemsSchema = new Schema(
     tags: { type: [String], required: true },
     image: { type: String },
     fields: { type: Schema.Types.Mixed, required: true },
-    likesCount: { type: Number, required: false, default: 0 },
+    likes: [{ type: likesSchema, required: false }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {

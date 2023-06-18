@@ -3,15 +3,16 @@ import { Outlet, useLocation } from "react-router-dom";
 import { CollectionList, CreateBtn, TagCloud } from "../../components";
 import {
   api,
-  Collections as Collection,
+  Collection as Collection,
+  collectionStore,
   isAuth,
   ROUTER_PATHS,
 } from "../../../data";
 import { CircularProgress } from "@mui/material";
+import { observer } from "mobx-react";
 
-export const Collections = () => {
+export const Collections = observer(() => {
   const location = useLocation();
-  const [collections, setCollections] = useState<Collection[]>([]);
   const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ export const Collections = () => {
           "/collections"
         );
 
-        setCollections(res.data.collections);
+        collectionStore.setCollection(res.data.collections);
       } catch (error) {
         console.log(error);
       } finally {
@@ -38,7 +39,7 @@ export const Collections = () => {
         <>
           {loaded ? (
             <>
-              <CollectionList collection={collections} />
+              <CollectionList collections={collectionStore.collections} />
               {isAuth() && <CreateBtn />}
             </>
           ) : (
@@ -54,4 +55,4 @@ export const Collections = () => {
       <TagCloud />
     </>
   );
-};
+});

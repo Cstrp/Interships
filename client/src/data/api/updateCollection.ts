@@ -1,9 +1,9 @@
-import { Collections } from "../types";
+import { Collection } from "../types";
 import { api } from "./apiInterceptor.ts";
 
 export const updateCollection = async (
   collectionId: string,
-  collection: Collections
+  collection: Collection
 ) => {
   try {
     const res = await api.put<{ message: string }>(

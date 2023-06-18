@@ -1,6 +1,6 @@
-import { Collections } from "../../../../../data";
+import { Collection } from "../../../../../data";
 
-export const initialValues: Collections = {
+export const initialValues: Collection = {
   name: "",
   description: "",
   theme: "",

@@ -1,7 +1,7 @@
-import { Collections } from "../../../../../data";
+import { Collection } from "../../../../../data";
 import { Dispatch, SetStateAction } from "react";
 
 export interface CollectionListProps {
-  collection: Collections[];
-  setCollection?: Dispatch<SetStateAction<Collections[]>>;
+  collections: Collection[];
+  setCollection?: Dispatch<SetStateAction<Collection[]>>;
 }

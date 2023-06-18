@@ -7,6 +7,12 @@ export interface Items {
   tags: string[];
   image?: string;
   fields: Record<string, string | number>;
-  likesCount: number;
+  likes: Likes[];
   comments: Comment[];
+}
+
+export interface Likes {
+  userId: string;
+  itemId: string;
+  isLiked: boolean;
 }

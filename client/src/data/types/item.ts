@@ -1,13 +1,13 @@
 import { Fields } from "./fileds.ts";
-import { Likes } from "./likes.ts";
 import { Comments } from "./comments.ts";
 
-export interface Items {
+export interface Item {
   _id?: string;
+  collectionId?: string;
   title: string;
   tags: string[];
   image?: string;
   fields: Fields[];
-  likes: Likes[];
+  likes: { userId?: string; itemId?: string; isLiked: boolean }[];
   comments: Comments[];
 }

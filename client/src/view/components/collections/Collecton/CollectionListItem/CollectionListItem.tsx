@@ -1,8 +1,12 @@
 import { NoImage } from "../../../common";
 import { CollectionItemActions } from "../CollectionItemActions/CollectionItemActions.tsx";
-import { Collections } from "../../../../../data";
+import { Collection } from "../../../../../data";
 
-export const CollectionListItem = (collection: Collections) => {
+export const CollectionListItem = ({
+  collection,
+}: {
+  collection: Collection;
+}) => {
   return (
     <>
       <div

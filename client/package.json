@@ -16,6 +16,7 @@
     "@mui/material": "^5.13.5",
     "axios": "^1.4.0",
     "formik": "^2.4.1",
+    "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",
     "notistack": "^3.0.1",
     "pusher-js": "^8.1.0",

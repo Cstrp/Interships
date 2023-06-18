@@ -1,2 +1,2 @@
 export * from "./user.ts";
-export * from "./collections.ts";
+export * from "./collection.ts";

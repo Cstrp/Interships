@@ -1,8 +1,8 @@
-import { Items } from "../../../../../data/types/items.ts";
+import { Item } from "../../../../../data/types/item.ts";
 import { ItemCard } from "../ItemCard/ItemCard.tsx";
 
 interface ItemsListProps {
-  items: Items[];
+  items: Item[];
 }
 export const ItemsList = ({ items }: ItemsListProps) => {
   const item = items.map(item => item);

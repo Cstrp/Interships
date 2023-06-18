@@ -1,12 +1,12 @@
 import { Fields } from "./fileds.ts";
-import { Items } from "./items.ts";
+import { Item } from "./item.ts";
 
-export interface Collections {
+export interface Collection {
   _id?: string;
   name: string;
   description: string;
   theme: string;
   imageUrl: string;
   fields: Fields[];
-  items?: Items[];
+  items?: Item[];
 }

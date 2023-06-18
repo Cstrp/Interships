@@ -4,7 +4,6 @@ import {
   deleteItem,
   getItemByCollectionId,
   likeItem,
-  unLikeItem,
   updateItem,
 } from "../controllers/itemController";
 import passport from "passport";
@@ -23,12 +22,6 @@ itemsRouter.post(
   "/items/:id/like",
   passport.authenticate("jwt", { session: false }),
   likeItem
-);
-
-itemsRouter.post(
-  "/items/:id/unlike",
-  passport.authenticate("jwt", { session: false }),
-  unLikeItem
 );
 
 itemsRouter.put(

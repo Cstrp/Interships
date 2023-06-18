@@ -3,6 +3,7 @@ import { errorHandler } from "../utils";
 import Item from "../models/item";
 import Collection from "../models/collection";
 import { uploadImage } from "../utils/uploadImage";
+import { Likes, User } from "../types";
 
 const getItemByCollectionId = async (req: Request, res: Response) => {
   try {
@@ -57,6 +58,7 @@ const createItem = async (req: Request, res: Response) => {
 const likeItem = async (req: Request, res: Response) => {
   try {
     const itemId = req.params.id;
+    const user = req.user as User;
 
     const item = await Item.findById(itemId).exec();
 
@@ -65,33 +67,22 @@ const likeItem = async (req: Request, res: Response) => {
       return;
     }
 
-    item.likesCount += 1;
+    const existingLike = item.likes.find(like => like.userId === user._id);
+
+    if (existingLike) {
+      item.likes = item.likes.filter(like => like.userId !== user._id);
+    } else {
+      const newLike: Likes = {
+        itemId: itemId,
+        userId: user._id,
+        isLiked: true,
+      };
+      item.likes.push(newLike);
+    }
+
     await item.save();
 
-    res.status(200).json({ message: "Item liked" });
-  } catch (error) {
-    errorHandler(res, 500, `Internal server error ${error}`);
-  }
-};
-
-const unLikeItem = async (req: Request, res: Response) => {
-  try {
-    const itemId = req.params.id;
-
-    const item = await Item.findById(itemId);
-
-    if (!item) {
-      errorHandler(res, 404, "Item not found");
-      return;
-    }
-
-    if (item.likesCount > 0) {
-      item.likesCount -= 1;
-      await item.save();
-      res.status(200).json({ message: "Item unliked" });
-    } else {
-      res.status(400).json({ message: "Item has no likes" });
-    }
+    res.status(200).json({ message: "Item liked/unliked" });
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }
@@ -134,11 +125,4 @@ const deleteItem = async (req: Request, res: Response) => {
   }
 };
 
-export {
-  getItemByCollectionId,
-  createItem,
-  likeItem,
-  unLikeItem,
-  updateItem,
-  deleteItem,
-};
+export { getItemByCollectionId, createItem, likeItem, updateItem, deleteItem };

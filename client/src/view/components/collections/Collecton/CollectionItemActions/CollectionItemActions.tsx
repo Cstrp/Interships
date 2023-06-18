@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Delete, Details, Edit } from "@mui/icons-material";
 import { removeCollection } from "../../../../../data/api/removeCollection.ts";
 import { useState } from "react";
-import { Collections, isAuth } from "../../../../../data";
+import { Collection, isAuth } from "../../../../../data";
 import { CollectionModal } from "../CollectionModal/CollectionModal.tsx";
 
 export const CollectionItemActions = ({
@@ -11,7 +11,7 @@ export const CollectionItemActions = ({
   collection,
 }: {
   collectionId: string;
-  collection?: Collections;
+  collection?: Collection;
 }) => {
   const [open, setOpen] = useState(false);
 
