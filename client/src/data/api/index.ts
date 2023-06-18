@@ -5,3 +5,4 @@ export * from "./login.ts";
 
 export * from "./collection/index.ts";
 export * from "./item/index.ts";
+export * from "./comment/index.ts";

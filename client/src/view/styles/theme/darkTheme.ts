@@ -17,7 +17,8 @@ export const darkTheme = createTheme({
       default: "#1A1A1A",
     },
     text: {
-      primary: "#FFFFFF",
+      primary: "#F9F9F9",
+      secondary: "rgba(255,255,255,0.05)",
     },
     error: {
       main: "#E57373",
