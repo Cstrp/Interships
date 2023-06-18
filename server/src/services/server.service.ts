@@ -8,17 +8,8 @@ import passport from "passport";
 import { collectionsRouter } from "../routes/collectionsRouter";
 import { itemsRouter } from "../routes/itemsRouter";
 import { commentsRouter } from "../routes/commentsRouter";
-import Pusher from "pusher";
-import { APP_ID, CLUSTER, KEY, SECRET } from "../config";
 
 const app: Express = express();
-const pusher = new Pusher({
-  appId: APP_ID,
-  key: KEY,
-  secret: SECRET,
-  cluster: CLUSTER,
-  useTLS: true,
-});
 
 app.use(passport.initialize());
 app.use(cors({ origin: "*" }));
@@ -60,4 +51,4 @@ app.get(
 //   }
 // });
 
-export { app, pusher };
+export { app };

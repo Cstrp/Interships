@@ -78,7 +78,20 @@ export const DetailedItem = observer(() => {
       }
     };
 
+    const fetchComments = async () => {
+      try {
+        const res = await api.get<Comments[]>(`/comments/${itemId}`);
+
+        item.comments = res.data;
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     fetchItemById();
+    fetchComments();
+
+    return () => {};
   }, [itemId]);
 
   return (
