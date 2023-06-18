@@ -85,10 +85,13 @@ const unLikeItem = async (req: Request, res: Response) => {
       return;
     }
 
-    item.likesCount -= 1;
-    await item.save();
-
-    res.status(200).json({ message: "Item unliked" });
+    if (item.likesCount > 0) {
+      item.likesCount -= 1;
+      await item.save();
+      res.status(200).json({ message: "Item unliked" });
+    } else {
+      res.status(400).json({ message: "Item has no likes" });
+    }
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }
