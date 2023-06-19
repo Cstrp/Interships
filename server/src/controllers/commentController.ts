@@ -4,22 +4,6 @@ import { User } from "../types";
 import Item from "../models/item";
 import Comment from "../models/comment";
 
-const getComments = async (req: Request, res: Response) => {
-  try {
-    const itemId = req.params.id;
-
-    const comments = await Comment.find({ itemId }).exec();
-
-    if (!comments) {
-      errorHandler(res, 404, "Comments not found");
-    }
-
-    res.status(200).json(comments);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const createComment = async (req: Request, res: Response) => {
   try {
     const user = req.user as User;
@@ -84,4 +68,4 @@ const removeComment = async (req: Request, res: Response) => {
   }
 };
 
-export { getComments, createComment, updateComment, removeComment };
+export { createComment, updateComment, removeComment };

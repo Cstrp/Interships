@@ -23,7 +23,7 @@ const getItemByCollectionId = async (req: Request, res: Response) => {
 const getItemById = async (req: Request, res: Response) => {
   try {
     const itemId = req.params.id;
-    const item = await Item.findById(itemId).exec();
+    const item = await Item.findById(itemId).populate("comments").exec();
 
     if (!item) {
       errorHandler(res, 404, "Item not found");

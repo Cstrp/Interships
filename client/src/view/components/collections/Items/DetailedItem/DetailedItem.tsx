@@ -1,17 +1,8 @@
-import {
-  api,
-  Comments,
-  createComment,
-  Item,
-  itemsStore,
-} from "../../../../../data";
 import { useLocation } from "react-router-dom";
 import { observer } from "mobx-react";
-import { useEffect, useState } from "react";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   Chip,
@@ -20,79 +11,20 @@ import {
   Typography,
 } from "@mui/material";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import { useDetailedItem } from "../../../../../data";
 
 export const DetailedItem = observer(() => {
-  const [item, setItem] = useState<Item>(itemsStore.item);
   const itemId = useLocation().pathname.split("/")[2];
 
-  const likeLength = item.likes
-    ? item.likes.filter(like => like.isLiked).length
-    : 0;
-  const isLiked = item.likes ? item.likes.some(like => like.isLiked) : false;
-
-  const [like, setLike] = useState<boolean>(isLiked);
-  const [likeCount, setLikeCount] = useState<number>(likeLength);
-  const [comment, setComment] = useState<string>("");
-
-  const handleLike = async (itemId: string, liked: boolean) => {
-    try {
-      setLike(!liked);
-      setLikeCount(liked ? likeCount - 1 : likeCount + 1);
-
-      const updatedItem = {
-        ...item,
-        likes: item.likes?.map(like => ({ ...like, isLiked: !liked })),
-      };
-
-      setItem(updatedItem);
-
-      await api.post(`/items/${itemId}/like`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleCommentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setComment(event.target.value);
-  };
-
-  const handleAddComment = () => {
-    const newComment: Comments = { itemId, content: comment };
-    const updatedComments = [...item.comments, newComment];
-    const updatedItem = { ...item, comments: updatedComments };
-
-    createComment(newComment);
-    setItem(updatedItem);
-    setComment("");
-  };
-
-  useEffect(() => {
-    const fetchItemById = async () => {
-      try {
-        const res = await api.get<Item>(`/item/${itemId}`);
-        setItem(res.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    const fetchComments = async () => {
-      try {
-        const res = await api.get<Comments[]>(`/comments/${itemId}`);
-
-        item.comments = res.data;
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchItemById();
-    fetchComments();
-
-    return () => {};
-  }, [itemId]);
+  const {
+    comment,
+    handleAddComment,
+    handleCommentChange,
+    item,
+    like,
+    likeCount,
+    handleLike,
+  } = useDetailedItem(itemId);
 
   return (
     <Card
@@ -118,33 +50,35 @@ export const DetailedItem = observer(() => {
         </Typography>
       </div>
       <CardContent>
-        <div className={"flex flex-row gap-5"}>
-          Tags:
-          {item.tags
-            ? item.tags.map((tag, idx) => (
-                <Chip key={idx} label={tag} variant="filled" />
-              ))
-            : "No tags"}
+        <div className={"flex flex-col gap-5"}>
+          <div className={"flex flex-row gap-5 items-center"}>
+            Tags:
+            {item.tags
+              ? item.tags.map((tag, idx) => (
+                  <Chip key={idx} label={tag} variant="filled" />
+                ))
+              : "No tags"}
+          </div>
+          <div className={"flex flex-row gap-5 items-center"}>
+            <IconButton onClick={() => handleLike(itemId, like)}>
+              {like ? <Favorite /> : <FavoriteBorder />}
+            </IconButton>
+            <span className={"text-base font-semibold"}>{likeCount}</span>
+          </div>
         </div>
       </CardContent>
-      <CardActions>
-        <div>
-          <IconButton onClick={() => handleLike(itemId, like)}>
-            {like ? <Favorite /> : <FavoriteBorder />}
-          </IconButton>
-          <span className={"text-base font-semibold"}>{likeCount}</span>
-        </div>
-      </CardActions>
       <CardContent className={"flex flex-col gap-10"}>
-        <div>
-          Comments:
-          {item.comments && item.comments.length > 0 ? (
-            item.comments.map((comment, idx) => (
-              <Typography key={idx}>{comment.content}</Typography>
-            ))
-          ) : (
-            <Typography>No comments</Typography>
-          )}
+        <div className={"w-full flex justify-self-auto"}>
+          <div>
+            Comments:
+            {item.comments && item.comments.length > 0 ? (
+              item.comments.map((comment, idx) => (
+                <Typography key={idx}>{comment.content}</Typography>
+              ))
+            ) : (
+              <Typography>No comments</Typography>
+            )}
+          </div>
         </div>
         <div>
           <TextareaAutosize
