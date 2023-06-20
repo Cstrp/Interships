@@ -15,6 +15,8 @@ import {
   tagsRouter,
 } from "../routes";
 import { searchRouter } from "../routes/searchRouter";
+import cron from "node-cron";
+import { cleanUpFiles } from "../utils";
 
 const app: Express = express();
 
@@ -33,5 +35,10 @@ app.use(RouterPaths.DEFAULT, commentsRouter);
 app.use(RouterPaths.DEFAULT, tagsRouter);
 app.use(RouterPaths.DEFAULT, searchRouter);
 app.post(RouterPaths.UPLOAD, upload.single("image"), uploadImgResp);
+
+cron.schedule("0 */12 * * *", () => {
+  cleanUpFiles();
+  console.log("Cleaning up files done!");
+});
 
 export { app };
