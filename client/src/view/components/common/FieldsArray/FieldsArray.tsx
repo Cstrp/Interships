@@ -22,7 +22,7 @@ export const FieldsArray = ({ fields, helpers }: FieldsArrayProps) => {
           <Field
             name={`fields.${idx}.name`}
             component={TextFormField}
-            placeholder="Enter the field name"
+            placeholder="Enter the field value"
           />
           <ButtonGroup>
             <Tooltip title={"Add"}>

@@ -11,10 +11,9 @@ const uploadImage = async (file: string) => {
   try {
     const res = await cloudinary.v2.uploader.upload(file, {
       use_filename: true,
-      unique_filename: false,
+      unique_filename: true,
       overwrite: true,
       resource_type: "auto",
-      transformation: [{ width: 250, height: 250 }],
     });
 
     return res.secure_url;

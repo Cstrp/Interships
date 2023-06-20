@@ -13,17 +13,20 @@ class CollectionsStore {
   }
 
   public addCollection(collection: Collection): void {
-    this.collections.push(collection);
+    this.collections = [...this.collections, collection];
   }
 
-  public updateCollection(collectionId: string, collection: Collection): void {
-    const idx = this.collections.findIndex(
-      collection => collection._id === collectionId
-    );
+  public updateCollection(
+    collectionId: string,
+    updatedCollection: Collection
+  ): void {
+    this.collections = this.collections.map(collection => {
+      if (collection._id === collectionId) {
+        return { _id: collectionId, ...updatedCollection };
+      }
 
-    if (idx !== -1) {
-      this.collections[idx] = collection;
-    }
+      return collection;
+    });
   }
 
   public removeCollection(collectionId: string): void {

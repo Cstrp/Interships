@@ -11,6 +11,7 @@ const DB_PASSWORD: string = process.env.DB_PASSWORD || "";
 
 // ?
 const SECRET_KEY: string = process.env.SECRET_KEY || "";
+const JWT_EXPIRE_TIME = process.env.JWT_EXPIRE_TIME || "";
 
 // Cloudinary
 const CLOUD_NAME = process.env.CLOUD_NAME || "";
@@ -25,4 +26,5 @@ export {
   API_SECRET,
   API_KEY,
   CLOUD_NAME,
+  JWT_EXPIRE_TIME,
 };

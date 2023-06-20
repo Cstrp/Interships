@@ -3,7 +3,7 @@ import { Item } from "../../types";
 
 export const updateItem = async (itemId: string, item: Item) => {
   try {
-    const res = await api.put<{ message: string }>(`/${itemId}`, item);
+    const res = await api.put<{ message: string }>(`/items/${itemId}`, item);
 
     return res.data;
   } catch (err) {

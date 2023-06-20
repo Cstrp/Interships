@@ -1,3 +1,3 @@
 export * from "./createComment.ts";
-export * from "./";
-export * from "./";
+export * from "./updateComment.ts";
+export * from "./removeComment.ts";

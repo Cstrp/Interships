@@ -28,7 +28,7 @@ export const DetailedItem = observer(() => {
 
   return (
     <Card
-      elevation={10}
+      elevation={20}
       sx={{
         width: "100%",
         minWidth: 1220,
@@ -69,11 +69,16 @@ export const DetailedItem = observer(() => {
       </CardContent>
       <CardContent className={"flex flex-col gap-10"}>
         <div className={"w-full flex justify-self-auto"}>
-          <div>
+          <div className={"max-w-5xl "}>
             Comments:
             {item.comments && item.comments.length > 0 ? (
-              item.comments.map((comment, idx) => (
-                <Typography key={idx}>{comment.content}</Typography>
+              item.comments.map(comment => (
+                <div
+                  key={comment._id}
+                  className={" flex flex-row justify-between"}
+                >
+                  <Typography>{comment.content}</Typography>
+                </div>
               ))
             ) : (
               <Typography>No comments</Typography>
@@ -82,11 +87,10 @@ export const DetailedItem = observer(() => {
         </div>
         <div>
           <TextareaAutosize
-            minRows={5}
+            minRows={3}
             value={comment}
             onChange={handleCommentChange}
-            className={"bg-transparent border p-2 rounded"}
-            style={{ width: "100%" }}
+            className={"bg-transparent border p-2 w-full rounded"}
           />
           <Button
             variant="outlined"

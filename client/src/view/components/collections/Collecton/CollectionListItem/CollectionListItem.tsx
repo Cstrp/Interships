@@ -1,6 +1,7 @@
 import { NoImage } from "../../../common";
 import { CollectionItemActions } from "../CollectionItemActions/CollectionItemActions.tsx";
 import { Collection } from "../../../../../data";
+import Box from "@mui/material/Box";
 
 export const CollectionListItem = ({
   collection,
@@ -9,15 +10,17 @@ export const CollectionListItem = ({
 }) => {
   return (
     <>
-      <div
+      <Box
+        component={"div"}
+        sx={{ backgroundColor: "background.default" }}
         className={
-          "max-w-md flex flex-col items-end rounded shadow-lg bg-white/10 px-1.5 py-2 overflow-y-auto"
+          "max-w-lg flex flex-col items-end rounded shadow-lg px-3 py-5 overflow-y-auto"
         }
       >
         <div className={"flex-1-0 flex flex-row gap-7"}>
-          {collection.imageUrl ? (
+          {collection.image ? (
             <img
-              src={collection.imageUrl}
+              src={collection.image}
               alt={collection.name}
               className="w-full rounded"
             />
@@ -25,7 +28,11 @@ export const CollectionListItem = ({
             <NoImage text={"No image"} />
           )}
 
-          <div className={"w-full my-7 flex flex-col gap-0.5"}>
+          <div
+            className={
+              "w-full my-7 flex flex-col gap-0.5 max-h-36 overflow-y-auto"
+            }
+          >
             <div className={"font-bold text-xl mb-2"}>{collection.name}</div>
             <div className={"font-semibold text-xl mb-2"}>
               Category: {collection.theme}
@@ -42,7 +49,7 @@ export const CollectionListItem = ({
           collectionId={collection._id ? collection._id : ""}
           collection={collection}
         />
-      </div>
+      </Box>
     </>
   );
 };

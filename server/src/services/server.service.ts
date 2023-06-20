@@ -8,16 +8,19 @@ import passport from "passport";
 import { collectionsRouter } from "../routes/collectionsRouter";
 import { itemsRouter } from "../routes/itemsRouter";
 import { commentsRouter } from "../routes/commentsRouter";
+import path from "path";
+import morgan from "morgan";
 
 const app: Express = express();
 
 app.use(passport.initialize());
+app.use(morgan("dev"));
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 _passportJwt(passport);
 
-app.use(RouterPaths.DEFAULT, express.static("static"));
+app.use(RouterPaths.DEFAULT, express.static(path.join(__dirname, "static")));
 app.use(RouterPaths.DEFAULT, authRouter);
 app.use(RouterPaths.DEFAULT, collectionsRouter);
 app.use(RouterPaths.DEFAULT, itemsRouter);
@@ -34,21 +37,5 @@ app.get(
     });
   }
 );
-
-// app.post("/upload", async (req, res) => {
-//   try {
-//     const { image } = req.body;
-//
-//     if (!image) {
-//       return res.status(400).json({ error: "Image data is required" });
-//     }
-//
-//     const imageUrl = await uploadImage(image);
-//     return res.status(200).json({ imageUrl });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: "Image upload failed" });
-//   }
-// });
 
 export { app };

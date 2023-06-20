@@ -8,7 +8,7 @@ const collectionSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String, required: true },
     theme: { type: String, required: true },
-    imageUrl: { type: String, required: false },
+    image: { type: String, required: false },
     fields: { type: [fieldSchema], required: false },
     items: [{ type: Schema.Types.ObjectId, ref: "Item" }],
   },

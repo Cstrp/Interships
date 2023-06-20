@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Comments, Item } from "../types";
-import { api, createComment } from "../api";
+import { api, createComment, removeComment, updateComment } from "../api";
 
 export const useDetailedItem = (itemId: string) => {
   const [item, setItem] = useState<Item>({} as Item);
   const [comment, setComment] = useState<string>("");
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
+  const [selectedCommentId, setSelectedCommentId] = useState<string>("");
 
   useEffect(() => {
     const fetchItemById = async () => {
@@ -18,16 +19,6 @@ export const useDetailedItem = (itemId: string) => {
       }
     };
 
-    const fetchComments = async () => {
-      try {
-        const res = await api.get<Comments[]>(`/comments/${itemId}`);
-        setItem(prevItem => ({ ...prevItem, comments: res.data }));
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchComments();
     fetchItemById();
   }, [itemId]);
 
@@ -54,13 +45,15 @@ export const useDetailedItem = (itemId: string) => {
   const handleAddComment = async () => {
     if (!comment) return;
 
-    const newComment: Comments = { itemId, content: comment };
-    const updatedComments = [...item.comments, newComment];
-    const updatedItem = { ...item, comments: updatedComments };
+    if (item.comments) {
+      const newComment: Comments = { itemId, content: comment };
+      const updatedComments = [...item.comments, newComment];
+      const updatedItem = { ...item, comments: updatedComments };
 
-    setItem(updatedItem);
-    setComment("");
-    await createComment(newComment);
+      setItem(updatedItem);
+      setComment("");
+      await createComment(newComment);
+    }
   };
 
   const handleLike = async (itemId: string, liked: boolean) => {
@@ -81,13 +74,54 @@ export const useDetailedItem = (itemId: string) => {
     }
   };
 
+  const handleUpdateComment = async (commentId: string, content: string) => {
+    try {
+      const updatedComment: Comments = { _id: commentId, itemId, content };
+      await updateComment(commentId, updatedComment);
+
+      if (item.comments) {
+        const updatedComments = item.comments.map(c =>
+          c._id === commentId ? { ...c, content } : c
+        );
+        setItem(prevState => ({ ...prevState, comments: updatedComments }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemoveComment = async (commentId: string) => {
+    try {
+      await removeComment(commentId);
+
+      if (item.comments) {
+        const updatedComments = item.comments.filter(c => c._id !== commentId);
+        setItem(prevState => ({ ...prevState, comments: updatedComments }));
+
+        if (selectedCommentId === commentId) {
+          setSelectedCommentId("");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSelectComment = (commentId: string) => {
+    setSelectedCommentId(commentId);
+  };
+
   return {
     item,
     comment,
     like,
     likeCount,
+    selectedCommentId,
     handleAddComment,
     handleCommentChange,
     handleLike,
+    handleRemoveComment,
+    handleUpdateComment,
+    handleSelectComment,
   };
 };

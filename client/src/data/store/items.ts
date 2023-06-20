@@ -1,18 +1,12 @@
 import { makeAutoObservable } from "mobx";
-import { Item } from "../types/item.ts";
-import { collectionStore } from "./collections.ts";
-import { Collection } from "../types";
+import { Item } from "../types";
 
 class ItemsStore {
   public items: Item[] = [];
   public item: Item = {} as Item;
 
-  private collection: Collection[] = [];
-
   constructor() {
     makeAutoObservable(this);
-
-    this.collection = collectionStore.collections;
   }
 
   public setItems(items: Item[]): void {
@@ -23,36 +17,22 @@ class ItemsStore {
     this.item = item;
   }
 
-  public addItem(collectionId: string, item: Item): void {
-    const collection = this.collection.find(c => c._id === collectionId);
-
-    if (collection) {
-      collection.items?.push(item);
-    }
+  public addItem(item: Item): void {
+    this.items = [...this.items, item];
   }
 
-  public updateItem(
-    collectionId: string,
-    itemId: string,
-    updatedItem: Item
-  ): void {
-    const collection = this.collection.find(c => c._id === collectionId);
-
-    if (collection) {
-      const item = collection.items?.find(i => i._id === itemId);
-
-      if (item) {
-        Object.assign(item, updatedItem);
+  public updateItem(itemId: string, updatedItem: Item): void {
+    this.items = this.items.map(item => {
+      if (item._id === itemId) {
+        return { _id: itemId, ...updatedItem };
       }
-    }
+
+      return item;
+    });
   }
 
-  public removeItem(collectionId: string, itemId: string): void {
-    const collection = this.collection.find(c => c._id === collectionId);
-
-    if (collection) {
-      collection.items = collection.items?.filter(i => i._id !== itemId);
-    }
+  public removeItem(itemId: string): void {
+    this.items = this.items.filter(item => item._id !== itemId);
   }
 }
 

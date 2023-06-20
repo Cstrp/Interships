@@ -1,6 +1,6 @@
 import express from "express";
 import { signIn, signUp } from "../controllers/authController";
-import { RouterPaths } from "../types/routerPaths";
+import { RouterPaths } from "../types";
 
 const authRouter = express.Router();
 

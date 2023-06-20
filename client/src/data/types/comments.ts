@@ -1,1 +1,6 @@
-export type Comments = { itemId: string; userId?: string; content: string };
+export type Comments = {
+  _id?: string;
+  itemId: string;
+  userId?: string;
+  content: string;
+};

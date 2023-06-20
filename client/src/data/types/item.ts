@@ -6,11 +6,11 @@ export interface Item {
   _id?: string;
   collectionId?: string;
   title: string;
-  tags: string[];
+  tags?: string[];
   image?: string;
-  fields: Fields[];
+  fields?: Fields[];
   likes?: { userId?: string; itemId?: string; isLiked: boolean }[];
-  comments: Comments[];
+  comments?: Comments[];
   actions?: ReactNode;
   createdAt?: Date;
   updatedAt?: Date;

@@ -9,6 +9,8 @@ const getCollections = async (req: Request, res: Response) => {
   try {
     const collections = await Collections.find().populate("items").exec();
 
+    collections.sort((a, b) => b.items.length - a.items.length);
+
     res.status(200).json({ collections });
   } catch (error) {
     errorHandler(res, 500, `Internal Server Error ${error}`);
@@ -18,7 +20,8 @@ const getCollections = async (req: Request, res: Response) => {
 const createCollection = async (req: Request, res: Response) => {
   try {
     const user = req.user as User;
-    const { imageUrl, name, description, theme, fields } = req.body;
+    const { imageURL, name, description, theme, fields } = req.body;
+    const img = req.file;
 
     if (!user) {
       errorHandler(res, 401, "Unauthorized!");
@@ -27,8 +30,10 @@ const createCollection = async (req: Request, res: Response) => {
 
     let image;
 
-    if (imageUrl) {
-      image = await uploadImage(imageUrl);
+    if (imageURL) {
+      image = await uploadImage(imageURL);
+    } else if (img) {
+      image = await uploadImage(img.path);
     }
 
     const newCollection = await new Collections({
@@ -36,7 +41,7 @@ const createCollection = async (req: Request, res: Response) => {
       name,
       description,
       theme,
-      imageUrl: image,
+      image,
       fields,
     }).save();
 

@@ -3,7 +3,7 @@ import { Item } from "../../types";
 
 export const createItem = async (item: Item) => {
   try {
-    const res = await api.post<{ message: string }>("", item);
+    const res = await api.post<{ message: string }>("/items/create", item);
 
     return res.data;
   } catch (error) {

@@ -3,9 +3,8 @@ import { TextFormField } from "../common";
 import { initialValues } from "./initialValues.ts";
 import { validationSchema } from "./validationSchema.ts";
 import { Button, IconButton, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { ROUTER_PATHS } from "../../../data";
-import { login } from "../../../data/api/login.ts";
+import { Link, useNavigate } from "react-router-dom";
+import { getLs, login, ROUTER_PATHS } from "../../../data";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -16,6 +15,8 @@ export const LoginForm = () => {
     setShowPass(!showPass);
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Formik
@@ -23,6 +24,9 @@ export const LoginForm = () => {
         onSubmit={(v, h) => {
           login(v);
           h.resetForm();
+
+          const token = getLs("token");
+          if (token) navigate(ROUTER_PATHS.COLLECTIONS);
         }}
         validationSchema={validationSchema}
       >

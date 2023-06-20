@@ -6,6 +6,7 @@ import {
   updateCollection,
 } from "../controllers/colletionsController";
 import passport from "passport";
+import { _muilter } from "../middlewares/upload";
 
 const collectionsRouter = express.Router();
 
@@ -13,12 +14,14 @@ collectionsRouter.get("/collections", getCollections);
 
 collectionsRouter.post(
   "/collections/create",
+  _muilter.single("image"),
   passport.authenticate("jwt", { session: false }),
   createCollection
 );
 
 collectionsRouter.put(
   "/collections/:id",
+  _muilter.single("image"),
   passport.authenticate("jwt", { session: false }),
   updateCollection
 );

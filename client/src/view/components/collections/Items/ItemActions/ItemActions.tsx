@@ -1,11 +1,12 @@
 import { ButtonGroup, IconButton, Tooltip } from "@mui/material";
 import { Delete, Details, Edit } from "@mui/icons-material";
-import { Item, removeItem } from "../../../../../data";
+import { Item, itemsStore, removeItem } from "../../../../../data";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ItemModal } from "..";
+import { observer } from "mobx-react";
 
-export const ItemActions = ({ item }: { item: Item }) => {
+export const ItemActions = observer(({ item }: { item: Item }) => {
   const [open, setOpen] = useState<boolean>(false);
   const itemId = item._id;
 
@@ -15,6 +16,7 @@ export const ItemActions = ({ item }: { item: Item }) => {
 
   const handleRemove = () => {
     if (itemId) {
+      itemsStore.removeItem(itemId);
       removeItem(itemId);
     }
   };
@@ -47,4 +49,4 @@ export const ItemActions = ({ item }: { item: Item }) => {
       />
     </>
   );
-};
+});

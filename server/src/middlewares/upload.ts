@@ -4,9 +4,14 @@ import * as fs from "fs";
 
 const storage = multer.diskStorage({
   destination: (req, file, next) => {
-    fs.mkdir("/upload", () => {
-      next(null, "upload/");
+    fs.mkdir("/static", () => {
+      next(null, "static/");
     });
+  },
+  filename(req, file, callback) {
+    const ext = file.mimetype.split("/")[1];
+
+    callback(null, `${file.fieldname}-${Date.now()}.${ext}`);
   },
 });
 

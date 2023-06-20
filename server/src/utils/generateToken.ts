@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-import { SECRET_KEY } from "../config";
+import { JWT_EXPIRE_TIME, SECRET_KEY } from "../config";
 
-const generateToken = (id: number, email: string) => {
+const generateToken = (id: number | string, email: string) => {
   return jwt.sign({ email, id }, SECRET_KEY, {
-    expiresIn: "777m",
+    expiresIn: JWT_EXPIRE_TIME,
   });
 };
 

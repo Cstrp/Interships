@@ -5,4 +5,3 @@ export * from "./role";
 export * from "./routerPaths";
 export * from "./comment";
 export * from "./field";
-export * from "./token";
