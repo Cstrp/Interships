@@ -8,7 +8,6 @@ import passport from "passport";
 import { collectionsRouter } from "../routes/collectionsRouter";
 import { itemsRouter } from "../routes/itemsRouter";
 import { commentsRouter } from "../routes/commentsRouter";
-import path from "path";
 import morgan from "morgan";
 
 const app: Express = express();
@@ -20,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 _passportJwt(passport);
 
-app.use(RouterPaths.DEFAULT, express.static(path.join(__dirname, "static")));
+app.use(RouterPaths.DEFAULT, express.static("static"));
 app.use(RouterPaths.DEFAULT, authRouter);
 app.use(RouterPaths.DEFAULT, collectionsRouter);
 app.use(RouterPaths.DEFAULT, itemsRouter);

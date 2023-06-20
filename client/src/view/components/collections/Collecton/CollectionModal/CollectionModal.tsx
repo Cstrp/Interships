@@ -22,12 +22,14 @@ import { observer } from "mobx-react";
 export const CollectionModal = observer(
   ({ isOpen, onClose, collection, collectionId }: CollectionModalProps) => {
     const [themes, setThemes] = useState<string[]>([]);
+    const [file, setFile] = useState<File | null>(null);
+
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
       const fetchThemes = async () => {
         try {
-          const res = await api<string>("/listOfCollectibles.txt");
+          const res = await api.get<string>("/listOfCollectibles.txt");
           const fetchedThemes = res.data.split("\n").map(str => str.trim());
           setThemes(fetchedThemes);
         } catch (error) {
@@ -42,8 +44,14 @@ export const CollectionModal = observer(
       name: collection?.name || "",
       theme: collection?.theme || "",
       description: collection?.description || "",
-      image: collection?.image || "",
+      image: collection?.image || file || "",
       fields: collection?.fields || [{ type: "", name: "" }],
+    };
+
+    const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      if (evt.target.files && evt.target.files.length > 0) {
+        setFile(evt.target.files[0]);
+      }
     };
 
     return (
@@ -114,11 +122,17 @@ export const CollectionModal = observer(
                     component={TextFormField}
                     placeholder="Enter the description of your collection"
                   />
-                  <Field
-                    name="image"
-                    component={TextFormField}
-                    placeholder="Enter the image URL"
-                  />
+                  <Field name="image" type="file">
+                    {({ field }: FieldProps<File>) => (
+                      <>
+                        <TextField
+                          type="file"
+                          {...field}
+                          onChange={handleOnChange}
+                        />
+                      </>
+                    )}
+                  </Field>
                   <FieldArray
                     name="fields"
                     render={arrayHelpers => (
