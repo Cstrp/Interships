@@ -2,8 +2,33 @@ import { Request, Response } from "express";
 import { errorHandler } from "../utils";
 import Item from "../models/item";
 import Collection from "../models/collection";
-import { uploadImage } from "../utils/uploadImage";
 import { Likes, User } from "../types";
+
+const getItems = async (req: Request, res: Response) => {
+  try {
+    const collections = await Collection.find({}, "name");
+    const collectionMap = new Map(
+      collections.map(collection => [
+        collection._id.toString(),
+        collection.name,
+      ])
+    );
+
+    const items = await Item.find().select("title collectionId fields");
+
+    const formattedItems = items.map(item => {
+      return {
+        itemName: item.title,
+        collectionName: collectionMap.get(item.collectionId.toString()),
+        fields: item.fields,
+      };
+    });
+
+    res.status(200).json(formattedItems);
+  } catch (error) {
+    errorHandler(res, 500, `Internal Server Error ${error}`);
+  }
+};
 
 const getItemByCollectionId = async (req: Request, res: Response) => {
   try {
@@ -42,12 +67,6 @@ const createItem = async (req: Request, res: Response) => {
 
     const collection = await Collection.findById(collectionId).exec();
 
-    let imageUrl;
-
-    if (image) {
-      imageUrl = await uploadImage(image);
-    }
-
     if (!collection) {
       errorHandler(res, 404, "Collection not found");
       return;
@@ -58,7 +77,7 @@ const createItem = async (req: Request, res: Response) => {
       title,
       tags,
       likes,
-      image: imageUrl,
+      image,
       fields: { ...collection?.fields, ...fields },
     }).save();
 
@@ -145,6 +164,7 @@ const deleteItem = async (req: Request, res: Response) => {
 };
 
 export {
+  getItems,
   getItemByCollectionId,
   getItemById,
   createItem,

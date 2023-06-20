@@ -1,5 +1,6 @@
     Books
     Coins
+    Photo
     Stamps
     Postcards
     Comics

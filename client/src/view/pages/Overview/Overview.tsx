@@ -11,7 +11,7 @@ import {
 import { CircularProgress } from "@mui/material";
 import { observer } from "mobx-react";
 
-export const Collections = observer(() => {
+export const Overview = observer(() => {
   const { pathname } = useLocation();
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -61,7 +61,6 @@ export const Collections = observer(() => {
       ) : (
         <Outlet />
       )}
-
       <TagCloud />
     </>
   );

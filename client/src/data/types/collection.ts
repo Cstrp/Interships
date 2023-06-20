@@ -6,7 +6,7 @@ export interface Collection {
   name: string;
   description: string;
   theme: string;
-  image: string | File;
+  image?: string;
   fields: Fields[];
   items?: Item[];
 }

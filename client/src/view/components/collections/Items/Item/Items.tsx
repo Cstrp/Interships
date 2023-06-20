@@ -26,7 +26,11 @@ export const Items = observer(() => {
 
     fetchedItems();
 
-    // const itemsTimer = setInterval(() => fetchedItems(), 8888);
+    const itemsTimer = setInterval(() => fetchedItems(), 8888);
+
+    return () => {
+      clearInterval(itemsTimer);
+    };
   }, [collectionId]);
 
   return (

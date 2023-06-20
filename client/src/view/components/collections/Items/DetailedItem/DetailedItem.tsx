@@ -43,7 +43,7 @@ export const DetailedItem = observer(() => {
           component={"img"}
           image={item.image}
           alt={item.title}
-          className={"max-w-[200px]"}
+          className={"max-w-[200px] max-h-52 rounded"}
         />
         <Typography variant={"h4"} color={"text"}>
           {item.title}

@@ -4,9 +4,9 @@ import {
   getCollections,
   removeCollection,
   updateCollection,
-} from "../controllers/colletionsController";
+} from "../controllers";
 import passport from "passport";
-import { _muilter } from "../middlewares/upload";
+import { upload } from "../middlewares/upload";
 
 const collectionsRouter = express.Router();
 
@@ -14,15 +14,15 @@ collectionsRouter.get("/collections", getCollections);
 
 collectionsRouter.post(
   "/collections/create",
-  _muilter.single("image"),
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   createCollection
 );
 
 collectionsRouter.put(
   "/collections/:id",
-  _muilter.single("image"),
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   updateCollection
 );
 

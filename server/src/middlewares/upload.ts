@@ -1,6 +1,6 @@
 import multer from "multer";
-import e from "express";
 import * as fs from "fs";
+import { Request } from "express";
 
 const storage = multer.diskStorage({
   destination: (req, file, next) => {
@@ -11,12 +11,12 @@ const storage = multer.diskStorage({
   filename(req, file, callback) {
     const ext = file.mimetype.split("/")[1];
 
-    callback(null, `${file.fieldname}-${Date.now()}.${ext}`);
+    callback(null, `${file.originalname}-${Date.now()}.${ext}`);
   },
 });
 
 const fileFilter = (
-  req: e.Request,
+  req: Request,
   file: Express.Multer.File,
   callback: multer.FileFilterCallback
 ) => {
@@ -33,4 +33,4 @@ const limits = {
   fileSize: 1024 * 1024 * 5,
 };
 
-export const _muilter = multer({ storage, fileFilter, limits });
+export const upload = multer({ storage, fileFilter, limits });

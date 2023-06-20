@@ -4,13 +4,15 @@ import {
   deleteItem,
   getItemByCollectionId,
   getItemById,
+  getItems,
   likeItem,
   updateItem,
-} from "../controllers/itemController";
+} from "../controllers";
 import passport from "passport";
 
 const itemsRouter = express.Router();
 
+itemsRouter.get("/items", getItems);
 itemsRouter.get("/items/:id", getItemByCollectionId);
 itemsRouter.get("/item/:id", getItemById);
 

@@ -1,14 +1,12 @@
 import {
-  api,
-  Collection,
-  collectionStore,
-  createCollection,
-  updateCollection,
-} from "../../../../../data";
-import { Field, FieldArray, FieldProps, Form, Formik } from "formik";
+  Field,
+  FieldArray,
+  FieldProps,
+  Form,
+  Formik,
+  FormikHelpers,
+} from "formik";
 import { CollectionModalProps } from "./CollectionModalProps.ts";
-import { FieldsArray, TextFormField } from "../../../common";
-import { useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import {
   Autocomplete,
@@ -18,12 +16,20 @@ import {
   Typography,
 } from "@mui/material";
 import { observer } from "mobx-react";
+import {
+  api,
+  Collection,
+  createCollection,
+  updateCollection,
+  upload,
+} from "../../../../../data";
+import { FieldsArray, TextFormField } from "../../../common";
+import { useEffect, useState } from "react";
 
 export const CollectionModal = observer(
   ({ isOpen, onClose, collection, collectionId }: CollectionModalProps) => {
-    const [themes, setThemes] = useState<string[]>([]);
     const [file, setFile] = useState<File | null>(null);
-
+    const [themes, setThemes] = useState<string[]>([]);
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -40,17 +46,46 @@ export const CollectionModal = observer(
       fetchThemes();
     }, []);
 
+    const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      if (evt.target.files && evt.target.files.length > 0) {
+        setFile(evt.target.files[0]);
+      }
+    };
+
     const initialValues: Collection = {
       name: collection?.name || "",
       theme: collection?.theme || "",
       description: collection?.description || "",
-      image: collection?.image || file || "",
       fields: collection?.fields || [{ type: "", name: "" }],
     };
 
-    const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-      if (evt.target.files && evt.target.files.length > 0) {
-        setFile(evt.target.files[0]);
+    const onSubmit = async (
+      values: Collection,
+      helpers?: FormikHelpers<Collection>
+    ) => {
+      try {
+        if (collectionId) {
+          const img = await upload(file);
+
+          const updatedCollection = await updateCollection(collectionId, {
+            ...values,
+            image: img?.imageUrl,
+          });
+          enqueueSnackbar(updatedCollection?.message);
+        } else {
+          const img = await upload(file);
+
+          const newCollection = await createCollection({
+            ...values,
+            image: img?.imageUrl,
+          });
+          enqueueSnackbar(newCollection?.message);
+        }
+
+        helpers?.resetForm();
+        onClose();
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -63,25 +98,7 @@ export const CollectionModal = observer(
       >
         <div className="relative w-[1240px] h-[700px] bg-teal-50/20 rounded-lg backdrop-blur-md flex justify-center items-center">
           <div className="w-full h-full overflow-y-auto px-10 py-8">
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(v, h) => {
-                if (collectionId) {
-                  updateCollection(collectionId, v).then(m =>
-                    enqueueSnackbar(m?.message)
-                  );
-                  collectionStore.updateCollection(collectionId, v);
-                  h.resetForm();
-                  onClose();
-                } else {
-                  console.log(v);
-                  createCollection(v).then(m => enqueueSnackbar(m?.message));
-                  collectionStore.addCollection(v);
-                  h.resetForm();
-                  onClose();
-                }
-              }}
-            >
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ values }) => (
                 <Form className="flex flex-col gap-7 max-h-full py-2">
                   <Typography
@@ -97,6 +114,7 @@ export const CollectionModal = observer(
                     component={TextFormField}
                     placeholder="Enter the name of your collection"
                   />
+
                   <Field name="theme">
                     {({ field, form }: FieldProps) => (
                       <Autocomplete
@@ -117,22 +135,19 @@ export const CollectionModal = observer(
                       />
                     )}
                   </Field>
+
                   <Field
                     name="description"
                     component={TextFormField}
                     placeholder="Enter the description of your collection"
                   />
-                  <Field name="image" type="file">
-                    {({ field }: FieldProps<File>) => (
-                      <>
-                        <TextField
-                          type="file"
-                          {...field}
-                          onChange={handleOnChange}
-                        />
-                      </>
-                    )}
-                  </Field>
+
+                  <TextField
+                    type={"file"}
+                    onChange={handleOnChange}
+                    variant={"standard"}
+                  />
+
                   <FieldArray
                     name="fields"
                     render={arrayHelpers => (
@@ -142,6 +157,7 @@ export const CollectionModal = observer(
                       />
                     )}
                   />
+
                   <Button
                     type={"submit"}
                     variant={"outlined"}

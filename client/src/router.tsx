@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTER_PATHS } from "./data";
 import {
-  Collections,
   DetailedItem,
   Header,
   Home,
   Items,
   Login,
+  Overview,
   Register,
   Wrapper,
 } from "./view";
@@ -28,7 +28,7 @@ export const router = createBrowserRouter(
         { path: ROUTER_PATHS.SIGN_UP, element: <Register /> },
         {
           path: ROUTER_PATHS.COLLECTIONS,
-          element: <Collections />,
+          element: <Overview />,
           children: [
             { path: "/collections/:collectionId", element: <Items /> },
           ],

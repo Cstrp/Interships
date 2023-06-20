@@ -12,7 +12,7 @@ const itemsSchema = new Schema(
     },
     title: { type: String, required: true },
     tags: { type: [String], required: true },
-    image: { type: String },
+    image: { type: String, required: false },
     fields: { type: [fieldSchema], required: false },
     likes: { type: [likesSchema], required: false },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],

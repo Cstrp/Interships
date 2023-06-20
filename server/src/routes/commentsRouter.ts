@@ -1,9 +1,5 @@
 import express from "express";
-import {
-  createComment,
-  removeComment,
-  updateComment,
-} from "../controllers/commentController";
+import { createComment, removeComment, updateComment } from "../controllers";
 import passport from "passport";
 
 const commentsRouter = express.Router();

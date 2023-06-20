@@ -1,6 +1,19 @@
-import { createItem, Item, itemsStore, updateItem } from "../../../../../data";
-import { Button, Chip, Input, Modal, Typography } from "@mui/material";
-import { Field, FieldArray, Form, Formik } from "formik";
+import {
+  createItem,
+  Item,
+  itemsStore,
+  updateItem,
+  upload,
+} from "../../../../../data";
+import {
+  Button,
+  Chip,
+  Input,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Field, FieldArray, Form, Formik, FormikHelpers } from "formik";
 import { FieldsArray, TextFormField } from "../../../common";
 import { useSnackbar } from "notistack";
 import { useLocation } from "react-router-dom";
@@ -11,6 +24,7 @@ import { observer } from "mobx-react";
 export const ItemModal = observer(
   ({ isOpen, onClose, itemId, item }: ItemModalProps) => {
     const { enqueueSnackbar } = useSnackbar();
+    const [file, setFile] = useState<File | null>(null);
     const [tagValue, setTagValue] = useState("");
 
     const handleTagChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,9 +35,42 @@ export const ItemModal = observer(
 
     const initialValues: Item = {
       title: item?.title || "",
-      image: item?.image || "",
       tags: item?.tags || [],
       fields: item?.fields || [{ type: "", name: "" }],
+    };
+
+    const onSubmit = async (values: Item, helpers?: FormikHelpers<Item>) => {
+      try {
+        if (itemId) {
+          const img = await upload(file);
+          const updatedItem = await updateItem(itemId, {
+            ...values,
+            image: img?.imageUrl,
+          });
+          enqueueSnackbar(updatedItem?.message);
+          itemsStore.updateItem(itemId, values);
+        } else {
+          const img = await upload(file);
+          const newItem = await createItem({
+            collectionId,
+            ...values,
+            image: img?.imageUrl,
+          });
+          enqueueSnackbar(newItem?.message);
+          itemsStore.addItem(values);
+        }
+
+        helpers?.resetForm();
+        onClose();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const handleOnChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+      if (evt.target.files && evt.target.files.length > 0) {
+        setFile(evt.target.files[0]);
+      }
     };
 
     return (
@@ -35,24 +82,7 @@ export const ItemModal = observer(
       >
         <div className="relative w-[1240px] h-[700px] bg-teal-50/20 rounded-lg backdrop-blur-md flex justify-center items-center">
           <div className="w-full h-full overflow-y-auto px-10 py-8">
-            <Formik
-              initialValues={initialValues}
-              onSubmit={(v, h) => {
-                if (itemId) {
-                  updateItem(itemId, v).then(m => enqueueSnackbar(m?.message));
-                  itemsStore.updateItem(itemId, v);
-                  h.resetForm();
-                  onClose();
-                } else {
-                  createItem({ collectionId, ...v }).then(m =>
-                    enqueueSnackbar(m?.message)
-                  );
-                  itemsStore.addItem(v);
-                  h.resetForm();
-                  onClose();
-                }
-              }}
-            >
+            <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ values }) => (
                 <Form className="flex flex-col gap-7 max-h-full py-2">
                   <Typography
@@ -68,10 +98,10 @@ export const ItemModal = observer(
                     component={TextFormField}
                     placeholder={"Enter the title of your collection item"}
                   />
-                  <Field
-                    name={"image"}
-                    component={TextFormField}
-                    placeholder={"Enter image url of your collection item"}
+                  <TextField
+                    type={"file"}
+                    onChange={handleOnChange}
+                    variant={"standard"}
                   />
 
                   <FieldArray
