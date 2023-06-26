@@ -5,3 +5,4 @@ export * from "./itemsRouter";
 export * from "./commentsRouter";
 export * from "./checkRouter";
 export * from "./userRouter";
+export * from "./topicRouter";

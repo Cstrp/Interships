@@ -35,24 +35,24 @@ const getUsers = async (req: Request, res: Response) => {
 const changeRole = async (req: Request, res: Response) => {
   try {
     const user = req.user as Usr;
-    const { id, role } = req.body;
 
     if (user && user.role !== Role.ADMIN) {
       errorHandler(res, 401, "Huh?");
       return;
+    } else {
+      const foundedUser = await User.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: false }
+      );
+
+      if (!foundedUser) {
+        errorHandler(res, 404, "User not found");
+        return;
+      }
     }
 
-    const foundedUser = await User.findById(id).exec();
-
-    if (!foundedUser) {
-      errorHandler(res, 404, "User not found");
-      return;
-    }
-
-    foundedUser.role = role;
-    await foundedUser.save();
-
-    res.status(200).json({ message: "User role has been changed" });
+    res.status(200).json({ message: "Role has been changed!" });
   } catch (error) {
     errorHandler(res, 500, `Internal Server Error ${error}`);
   }

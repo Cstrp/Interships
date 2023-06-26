@@ -7,6 +7,9 @@ import passport from "passport";
 import morgan from "morgan";
 import { upload } from "../middlewares/upload";
 import { uploadImgResp } from "../controllers";
+import { searchRouter } from "../routes/searchRouter";
+import cron from "node-cron";
+import { cleanUpFiles } from "../utils";
 import {
   authRouter,
   checkRouter,
@@ -14,11 +17,9 @@ import {
   commentsRouter,
   itemsRouter,
   tagsRouter,
+  topicRouter,
   userRouter,
 } from "../routes";
-import { searchRouter } from "../routes/searchRouter";
-import cron from "node-cron";
-import { cleanUpFiles } from "../utils";
 
 const app: Express = express();
 
@@ -38,6 +39,7 @@ app.use(RouterPaths.DEFAULT, tagsRouter);
 app.use(RouterPaths.DEFAULT, searchRouter);
 app.use(RouterPaths.DEFAULT, checkRouter);
 app.use(RouterPaths.DEFAULT, userRouter);
+app.use(RouterPaths.DEFAULT, topicRouter);
 app.post(RouterPaths.UPLOAD, upload.single("image"), uploadImgResp);
 
 cron.schedule("0 */12 * * *", () => {

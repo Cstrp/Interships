@@ -14,8 +14,8 @@ userRouter.get(
   getUsers
 );
 
-userRouter.post(
-  "/users/change-role",
+userRouter.put(
+  "/users/:id",
   passport.authenticate("jwt", { session: false }),
   changeRole
 );

@@ -1,4 +1,4 @@
-export const apiUrl = "http://localhost:8080/api";
+const dev = "http://localhost:8080/api";
+const prod = "https://itransitioncourse-production.up.railway.app/api";
 
-// https://itransitioncourse-production.up.railway.app/
-// http://localhost:8080
+export const apiUrl = prod;

@@ -12,10 +12,8 @@ export const Wrapper = observer(({ children }: { children: ReactNode }) => {
       maxWidth={"xl"}
       sx={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
-        height: "85vh",
+        flexWrap: "wrap",
       }}
     >
       <Box sx={{ mt: 10 }}>{children}</Box>
@@ -28,7 +26,7 @@ export const Wrapper = observer(({ children }: { children: ReactNode }) => {
         />
       ) : (
         <img
-          className="absolute inset-0 blur z-[-10] w-full h-full object-cover"
+          className="absolute inset-0 blur z-[-10] w-full h-full  object-cover"
           src={bg}
           alt="bg"
         />

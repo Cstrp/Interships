@@ -44,12 +44,14 @@ export const Header = observer(() => {
             </Button>
           </Box>
 
-          <TextField
-            size={"small"}
-            placeholder={"Search..."}
-            className={"w-1/3"}
-            InputProps={{ startAdornment: <Search className={"mr-3"} /> }}
-          />
+          <div className={"w-1/2  2xl:block hidden"}>
+            <TextField
+              size={"small"}
+              placeholder={"Search..."}
+              className={"w-full"}
+              InputProps={{ startAdornment: <Search className={"mr-3"} /> }}
+            />
+          </div>
 
           <Box>
             {roleStore.isAdmin() && (
