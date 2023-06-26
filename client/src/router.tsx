@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ROUTER_PATHS } from "./data";
 import {
+  Admin,
+  Collection,
   DetailedItem,
   Header,
   Home,
@@ -34,9 +36,15 @@ export const router = createBrowserRouter(
           ],
         },
         {
+          path: ROUTER_PATHS.COLLECTION,
+          element: <Collection />,
+          children: [{ path: "/collection/:collectionId", element: <Items /> }],
+        },
+        {
           path: "/items/:itemId",
           element: <DetailedItem />,
         },
+        { path: "/admin", element: <Admin /> },
       ],
     },
   ],

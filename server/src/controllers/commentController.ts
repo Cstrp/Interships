@@ -23,7 +23,7 @@ const createComment = async (req: Request, res: Response) => {
     item?.comments.push(newComment);
     await item?.save();
 
-    res.status(201).json({ message: "New comment was created!", newComment });
+    res.status(201).json({ message: "New comment was created!" });
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }
@@ -42,9 +42,7 @@ const updateComment = async (req: Request, res: Response) => {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Comment has been updated", updatedComment });
+    res.status(200).json({ message: "Comment has been updated" });
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }

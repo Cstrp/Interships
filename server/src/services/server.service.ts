@@ -9,10 +9,12 @@ import { upload } from "../middlewares/upload";
 import { uploadImgResp } from "../controllers";
 import {
   authRouter,
+  checkRouter,
   collectionsRouter,
   commentsRouter,
   itemsRouter,
   tagsRouter,
+  userRouter,
 } from "../routes";
 import { searchRouter } from "../routes/searchRouter";
 import cron from "node-cron";
@@ -34,6 +36,8 @@ app.use(RouterPaths.DEFAULT, itemsRouter);
 app.use(RouterPaths.DEFAULT, commentsRouter);
 app.use(RouterPaths.DEFAULT, tagsRouter);
 app.use(RouterPaths.DEFAULT, searchRouter);
+app.use(RouterPaths.DEFAULT, checkRouter);
+app.use(RouterPaths.DEFAULT, userRouter);
 app.post(RouterPaths.UPLOAD, upload.single("image"), uploadImgResp);
 
 cron.schedule("0 */12 * * *", () => {

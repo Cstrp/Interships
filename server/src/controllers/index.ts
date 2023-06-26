@@ -4,3 +4,4 @@ export * from "./tagsController";
 export * from "./itemController";
 export * from "./authController";
 export * from "./commentController";
+export * from "./roleController";

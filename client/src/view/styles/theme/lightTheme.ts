@@ -5,12 +5,10 @@ export const lightTheme = createTheme({
   ...breakpoints,
   palette: {
     mode: "light",
-    primary: { main: "#FFFFFF", dark: "#FFFFFF" },
-    secondary: { main: "#FFFFFF" },
-    background: { default: "rgba(0,0,0,0.3)" },
-    text: { primary: "#FFFFFF", secondary: "#FFFFFF" },
-    error: { main: "#FFFFFF", dark: "#FFFFFF" },
-    action: { active: "#FFFFFF", disabled: "#FFFFFF" },
-    common: { black: "#FFFFFF", white: "#FFFFFF" },
+    primary: { main: "#FFFFFFCC" },
+    secondary: { main: "#F9F9F9", light: "#370031" },
+    background: { default: "#F9F9F919" },
+    text: { primary: "#F9F9F9", secondary: "#FFFFFF0C" },
+    error: { main: "#E57373" },
   },
 });

@@ -6,7 +6,7 @@ import { Likes, User } from "../types";
 
 const getItems = async (req: Request, res: Response) => {
   try {
-    const collections = await Collection.find({}, "name");
+    const collections = await Collection.find({}, "name").exec();
     const collectionMap = new Map(
       collections.map(collection => [
         collection._id.toString(),
@@ -14,7 +14,10 @@ const getItems = async (req: Request, res: Response) => {
       ])
     );
 
-    const items = await Item.find().select("title collectionId fields");
+    const items = await Item.find()
+      .sort({ createdAt: -1 })
+      .select("title collectionId fields")
+      .exec();
 
     const formattedItems = items.map(item => {
       return {
@@ -72,19 +75,20 @@ const createItem = async (req: Request, res: Response) => {
       return;
     }
 
-    const newItem = await new Item({
+    const item = {
       collectionId,
       title,
       tags,
-      likes,
       image,
-      fields: { ...collection?.fields, ...fields },
-    }).save();
+      fields: { ...collection.fields, ...fields },
+      likes,
+    };
 
+    const newItem = await new Item(item).save();
     collection.items.push(newItem);
     await collection.save();
 
-    res.status(201).json({ message: "New item has been created!", newItem });
+    res.status(201).json({ message: "New item has been created!" });
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }
@@ -139,7 +143,7 @@ const updateItem = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json({ message: "Item has been updated!", updatedItem });
+    res.status(200).json({ message: "Item has been updated!" });
   } catch (error) {
     errorHandler(res, 500, `Internal server error ${error}`);
   }

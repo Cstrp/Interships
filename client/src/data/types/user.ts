@@ -3,10 +3,10 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  role?: Role;
+  role?: ROLE;
 }
 
-export const enum Role {
+export const enum ROLE {
   USER = "user",
   ADMIN = "admin",
 }

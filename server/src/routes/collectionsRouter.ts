@@ -2,6 +2,7 @@ import express from "express";
 import {
   createCollection,
   getCollections,
+  getCollectionsByUserId,
   removeCollection,
   updateCollection,
 } from "../controllers";
@@ -11,6 +12,12 @@ import { upload } from "../middlewares/upload";
 const collectionsRouter = express.Router();
 
 collectionsRouter.get("/collections", getCollections);
+
+collectionsRouter.get(
+  "/collection",
+  passport.authenticate("jwt", { session: false }),
+  getCollectionsByUserId
+);
 
 collectionsRouter.post(
   "/collections/create",

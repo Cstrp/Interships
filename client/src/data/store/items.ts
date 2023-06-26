@@ -3,7 +3,6 @@ import { Item } from "../types";
 
 class ItemsStore {
   public items: Item[] = [];
-  public item: Item = {} as Item;
 
   constructor() {
     makeAutoObservable(this);
@@ -11,10 +10,6 @@ class ItemsStore {
 
   public setItems(items: Item[]): void {
     this.items = items;
-  }
-
-  public setItem(item: Item): void {
-    this.item = item;
   }
 
   public addItem(item: Item): void {

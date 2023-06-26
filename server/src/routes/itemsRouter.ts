@@ -9,6 +9,7 @@ import {
   updateItem,
 } from "../controllers";
 import passport from "passport";
+import { upload } from "../middlewares/upload";
 
 const itemsRouter = express.Router();
 
@@ -19,6 +20,7 @@ itemsRouter.get("/item/:id", getItemById);
 itemsRouter.post(
   "/items/create",
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   createItem
 );
 
@@ -31,6 +33,7 @@ itemsRouter.post(
 itemsRouter.put(
   "/items/:id",
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   updateItem
 );
 
