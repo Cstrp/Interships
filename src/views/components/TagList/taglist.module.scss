@@ -1,0 +1,33 @@
+.tags {
+  display: flex;
+  gap: 10px;
+
+  &Input {
+    width: 40%;
+    padding: 5px;
+    border: 1px solid #b1b1b1;
+    background-color: #dbe2ef;
+    &::placeholder {
+      color: #000000;
+    }
+  }
+
+  &AddButton {
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.tag {
+  color: rgba(39, 42, 94, 0.76);
+
+  &Active {
+    color: #b42525;
+  }
+}
+
+

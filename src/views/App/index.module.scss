@@ -1,0 +1,34 @@
+.article {
+  min-width: 650px;
+  background-color: #dbe2ef;
+  border-radius: 20px;
+  padding: 20px 55px 30px;
+  &Title {
+    font-size: 40px;
+    margin-bottom: 0.3em;
+    text-align: center;
+  }
+  &Text {
+    text-align: center;
+  }
+}
+
+
+.input {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 60px;
+  margin-bottom: 20px;
+
+  &Value {
+    border: 1px solid #b1b1b1;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px 10px;
+    background-color: #dbe2ef;
+
+    &::placeholder {
+      color: #000000;
+    }
+  }
+}
