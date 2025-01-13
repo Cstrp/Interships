@@ -1,20 +1,13 @@
 {
-  "name": "slmax-nest-testovoe-zadanie",
+  "name": "test-task",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "index.mjs",
   "scripts": {
-    "server": "npm run start:dev --prefix server",
-    "server-install": "pnpm install --prefix server",
-    "client": "npm start --prefix client",
-    "client-install": "pnpm install --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^8.2.0",
-    "prettier": "^3.0.1"
-  }
+  "description": ""
 }
